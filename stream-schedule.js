@@ -14,9 +14,15 @@ const countdownEl = document.getElementById("countdown");
 const nextStreamTimeEl = document.getElementById("next-stream-time");
 const nextStreamContainer = document.getElementById("next-stream");
 
+// Twitch embed container (created but hidden initially)
+let twitchEmbedContainer = document.createElement("div");
+twitchEmbedContainer.id = "twitch-embed-container";
+twitchEmbedContainer.style =
+  "aspect-ratio:16/9; max-width:none; min-width:100%!important; margin-top:1rem; display:none;";
+scheduleList.parentNode.appendChild(twitchEmbedContainer);
+
 function isCurrentlyLive() {
   const now = new Date();
-
   return SCHEDULE.some((stream) => {
     if (stream.day !== now.getDay()) return false;
 
@@ -42,7 +48,6 @@ function getNextStream() {
       const streamDate = new Date(
         testDate.toLocaleString("en-US", { timeZone: STREAM_TIMEZONE })
       );
-
       streamDate.setHours(h, m, 0, 0);
 
       const localStreamDate = new Date(
@@ -63,21 +68,40 @@ function updateCountdown() {
   if (isCurrentlyLive()) {
     countdownEl.style.display = "none";
     nextStreamContainer.style.display = "none";
-    return;
+    showTwitchEmbed();
+  } else {
+    countdownEl.style.display = "";
+    nextStreamContainer.style.display = "";
+    hideTwitchEmbed();
+
+    const next = getNextStream();
+    if (!next) return;
+
+    const diff = next.date - new Date();
+    const hours = Math.floor(diff / 1000 / 60 / 60);
+    const minutes = Math.floor((diff / 1000 / 60) % 60);
+    const seconds = Math.floor((diff / 1000) % 60);
+
+    countdownEl.textContent = `Starts in ${hours}h ${minutes}m ${seconds}s`;
   }
+}
 
-  countdownEl.style.display = "";
-  nextStreamContainer.style.display = "";
+function showTwitchEmbed() {
+  twitchEmbedContainer.style.display = "block"; // only show when live
+  twitchEmbedContainer.innerHTML = `
+    <iframe
+      src="https://player.twitch.tv/?channel=zethnos&parent=zethnos.com&autoplay=true&muted=true"
+      width="100%"
+      height="100%"
+      frameborder="0"
+      allowfullscreen
+    ></iframe>
+  `;
+}
 
-  const next = getNextStream();
-  if (!next) return;
-
-  const diff = next.date - new Date();
-  const hours = Math.floor(diff / 1000 / 60 / 60);
-  const minutes = Math.floor((diff / 1000 / 60) % 60);
-  const seconds = Math.floor((diff / 1000) % 60);
-
-  countdownEl.textContent = `Starts in ${hours}h ${minutes}m ${seconds}s`;
+function hideTwitchEmbed() {
+  twitchEmbedContainer.style.display = "none"; // hide when not live
+  twitchEmbedContainer.innerHTML = "";
 }
 
 function renderSchedule() {
@@ -100,13 +124,11 @@ function renderSchedule() {
     const dayLabel = tempDate.toLocaleDateString(undefined, {
       weekday: "long",
     });
-
     const timeLabel = tempDate.toLocaleTimeString([], {
       hour: "numeric",
       minute: "2-digit",
     });
 
-    // Check if this stream is currently live
     if (now >= tempDate && now <= end) {
       li.classList.add("live");
 
@@ -119,13 +141,11 @@ function renderSchedule() {
           </span>
         </a>
       `;
+      showTwitchEmbed();
     } else {
-      // Not live — normal display
       li.innerHTML = `
         <span>${dayLabel}</span>
-        <span class="d-flex align-items-center gap-2">
-          ${timeLabel}
-        </span>
+        <span class="d-flex align-items-center gap-2">${timeLabel}</span>
       `;
     }
 
@@ -137,6 +157,4 @@ function renderSchedule() {
 renderSchedule();
 updateCountdown();
 setInterval(updateCountdown, 1000);
-
-// Optional: Refresh schedule every minute to update LIVE links automatically
-setInterval(renderSchedule, 60 * 1000);
+setInterval(renderSchedule, 60 * 1000); // Refresh schedule every minute
