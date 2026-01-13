@@ -11,7 +11,7 @@ h3 {
 
 h5,
 h6 {
-  font-family: "Bungee", cursive;
+  font-family: "Arial Black", cursive;
   color: #fff;
   font-weight: normal;
   position: relative;
@@ -312,7 +312,7 @@ nav {
 
 /* Title uses Bungee like site headers */
 #stream-schedule .card-title {
-  font-family: "Bungee", cursive;
+  font-family: "Arial Black", cursive;
   font-size: 1.5rem;
   color: #fff;
   margin-bottom: 1rem;
@@ -333,7 +333,6 @@ nav {
 /* Next stream label */
 #next-stream {
   letter-spacing: 0.05em;
-  text-transform: uppercase;
   padding-top: 10px;
 }
 
