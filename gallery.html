@@ -1,357 +1,222 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Zethnos Art Gallery | Custom Digital Art</title>
-    <meta name="description" content="Explore Zethnos's art gallery featuring custom digital artwork and creative projects.">
-    <meta property="og:title" content="Zethnos Art Gallery | Custom Digital Art">
-    <meta property="og:description" content="Discover Zethnos's digital art portfolio, showcasing custom designs and creative projects.">
-    <meta property="og:image" content="https://www.zethnos.com/images/gallery-og-image.jpg">
-    <meta property="og:url" content="https://www.zethnos.com/gallery.html">
-    <meta name="twitter:card" content="summary_large_image">
-    <link rel="canonical" href="https://www.zethnos.com/gallery.html">
+    <meta
+      name="description"
+      content="Explore Zethnos's art gallery featuring custom digital artwork and creative projects."
+    />
+    <meta
+      property="og:title"
+      content="Zethnos Art Gallery | Custom Digital Art"
+    />
+    <meta
+      property="og:description"
+      content="Discover Zethnos's digital art portfolio, showcasing custom designs and creative projects."
+    />
+    <meta
+      property="og:image"
+      content="https://www.zethnos.com/images/gallery-og-image.jpg"
+    />
+    <meta property="og:url" content="https://www.zethnos.com/gallery.html" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="canonical" href="https://www.zethnos.com/gallery.html" />
     <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "CreativeWork",
-      "creator": {
-        "@type": "Person",
-        "name": "Zethnos",
-        "url": "https://www.zethnos.com"
-      },
-      "name": "Zethnos Art Gallery",
-      "description": "A collection of custom digital artwork by Zethnos, including character designs and creative projects."
-    }
+      {
+        "@context": "https://schema.org",
+        "@type": "CreativeWork",
+        "creator": {
+          "@type": "Person",
+          "name": "Zethnos",
+          "url": "https://www.zethnos.com"
+        },
+        "name": "Zethnos Art Gallery",
+        "description": "A collection of custom digital artwork by Zethnos, including character designs and creative projects."
+      }
     </script>
-    <link rel="icon" type="image/x-icon" href="img/favicon/favicon.ico">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Bungee&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        h1, h2, h3 {
-            font-family: 'Bungee', cursive;
-            color: #fff; /* White for headers */
-            font-weight: normal; /* Ensure headers are not bold */
-            position: relative; /* For positioning the underline */
-            transition: color 0.3s ease; /* Smooth color transition (if needed) */
-			margin-bottom: 20px;
-        }
-        h1:not(.zethnos-title)::after,
-        h2::after,
-        h3::after {
-            content: '';
-            position: absolute;
-            width: 100%; /* Full underline for headers */
-            height: 2px;
-            bottom: -4px; /* Position underline below text */
-            left: 0;
-            background-color: #00ff00; /* Orange underline */
-        }
-        .zethnos-card h1.zethnos-title {
-            font-size: 3rem; /* Larger title for Zethnos card */
-			padding-bottom: 0px;
-			margin-bottom: 0px;
-        }
-        .social-logos {
-            display: flex;
-            justify-content: flex-start; /* Align logos to the left */
-            gap: 1rem; /* Space between logos */
-            margin-top: 0.5rem; /* Space below title */
-            width: fit-content; /* Match the width of the h1 title content */
-			margin-bottom: 2rem;
-        }
-        .social-logos img {
-            width: 32px; /* Size of social media logos */
-            height: 32px;
-        }
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 2rem;
-            background-color: #111; /* Dark background */
-            color: #fff; /* White for body text */
-        }
-        nav {
-            background-color: transparent;
-        }
-        .navbar-nav {
-            font-family: 'Bungee', sans-serif;
-        }
-        .navbar-nav .nav-link {
-            color: #d3d3d3; /* Light grey for inactive links */
-            position: relative;
-            transition: color 0.3s ease;
-        }
-        .navbar-nav .nav-link:hover {
-            color: #ffffff; /* White on hover */
-        }
-        .navbar-nav .nav-link.active {
-            color: #ffffff; /* White for active link */
-        }
-        /* Orange underline for active link */
-        .navbar-nav .nav-link.active::after {
-            content: '';
-            position: absolute;
-            width: calc(100% - 0.5em); /* Stop underline at text end */
-            height: 2px;
-            bottom: 0;
-            left: 0.25em; /* Center underline under text */
-            background-color: #ff6200; /* Orange */
-        }
-        /* Orange underline animation for hover */
-        .navbar-nav .nav-link::before {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: 0;
-            left: 0.25em; /* Center underline under text */
-            background-color: #ff6200; /* Orange */
-            transition: width 0.3s ease;
-        }
-        .navbar-nav .nav-link:hover::before {
-            width: calc(100% - 0.5em); /* Stop underline at text end */
-        }
-        /* White hamburger icon */
-        .navbar-toggler-icon {
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 1)' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
-        }
-        .gallery-container {
-            padding: 50px 20px;
-        }
-        .gallery-item {
-            position: relative;
-            overflow: hidden;
-            border-radius: 10px;
-            transition: transform 0.3s ease;
-            cursor: pointer;
-        }
-        .gallery-item img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-        .gallery-item:hover {
-            transform: scale(1.05);
-        }
-        .gallery-item:hover img {
-            transform: scale(1.1);
-        }
-        .gallery-item-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            opacity: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 0.3s ease;
-        }
-        .gallery-item:hover .gallery-item-overlay {
-            opacity: 1;
-        }
-        .gallery-item-overlay span {
-            color: #fff;
-            font-size: 1.2rem;
-            font-weight: bold;
-        }
-        #lightbox {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-        }
-        #lightbox img {
-            max-width: 90%;
-            max-height: 90%;
-            border-radius: 10px;
-        }
-        #lightbox-close {
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            color: #fff;
-            font-size: 2rem;
-            cursor: pointer;
-        }
-        #lightbox-prev, #lightbox-next {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #fff;
-            font-size: 1.5rem; /* Reduced from 3rem */
-            cursor: pointer;
-            user-select: none;
-            padding: 10px;
-        }
-        #lightbox-prev {
-            left: 10px;
-        }
-        #lightbox-next {
-            right: 10px;
-        }
-        #lightbox-prev:hover, #lightbox-next:hover {
-            color: #ccc;
-        }
-    </style>
-</head>
-<body>
+    <link rel="icon" type="image/x-icon" href="img/favicon/favicon.ico" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bungee&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <nav class="navbar navbar-expand-lg">
-        <div class="container-fluid">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="index.html">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#gallery">Art Gallery</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="freelance.html">Freelance</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="socials.html">Socials</a>
-                    </li>
-                </ul>
-            </div>
+      <div class="container-fluid">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div
+          class="collapse navbar-collapse justify-content-center"
+          id="navbarNav"
+        >
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="index.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="#gallery">Art Gallery</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="freelance.html">Freelance</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="socials.html">Socials</a>
+            </li>
+          </ul>
         </div>
+      </div>
     </nav>
 
     <div class="gallery-container">
-        <h1 class="text-center mb-5">Image Gallery</h1>
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4" id="gallery">
-            <!-- Images will be populated dynamically -->
-        </div>
+      <h1 class="text-center mb-5">Image Gallery</h1>
+      <div
+        class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4"
+        id="gallery"
+      >
+        <!-- Images will be populated dynamically -->
+      </div>
     </div>
 
     <!-- Lightbox -->
     <div id="lightbox">
-        <span id="lightbox-close">×</span>
-        <span id="lightbox-prev">←</span>
-        <span id="lightbox-next">→</span>
-        <img id="lightbox-img" src="" alt="Lightbox Image">
+      <span id="lightbox-close">×</span>
+      <span id="lightbox-prev">←</span>
+      <span id="lightbox-next">→</span>
+      <img id="lightbox-img" src="" alt="Lightbox Image" />
     </div>
 
     <!-- Bootstrap JS and Popper.js -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const gallery = document.getElementById('gallery');
-            const lightbox = document.getElementById('lightbox');
-            const lightboxImg = document.getElementById('lightbox-img');
-            const lightboxClose = document.getElementById('lightbox-close');
-            const lightboxPrev = document.getElementById('lightbox-prev');
-            const lightboxNext = document.getElementById('lightbox-next');
-            let currentIndex = 0;
+      document.addEventListener("DOMContentLoaded", () => {
+        const gallery = document.getElementById("gallery");
+        const lightbox = document.getElementById("lightbox");
+        const lightboxImg = document.getElementById("lightbox-img");
+        const lightboxClose = document.getElementById("lightbox-close");
+        const lightboxPrev = document.getElementById("lightbox-prev");
+        const lightboxNext = document.getElementById("lightbox-next");
+        let currentIndex = 0;
 
-            // Array of full-size image URLs (replace with your own)
-            const fullSizeImages = [
-                { src: 'img/gallery/alfclaw-burger-food-emotes.jpg', alt: 'Image 1' },
-                { src: 'img/gallery/bigfoot-full.jpg', alt: 'Image 2' },
-                { src: 'img/gallery/business-cards.jpg', alt: 'Image 3' },
-                { src: 'img/gallery/cellmaster-logo.jpg', alt: 'Image 4' },
-                { src: 'img/gallery/chinese-dragon.jpg', alt: 'Image 5' },
-                { src: 'img/gallery/dauraane-dragon-logos.jpg', alt: 'Image 6' },
-                { src: 'img/gallery/dlive-lemon-yellow-stream-graphics.jpg', alt: 'Image 7' },
-                { src: 'img/gallery/dracux-frog-emotes.jpg', alt: 'Image 8' },
-                { src: 'img/gallery/falling-candy.jpg', alt: 'Image 9' },
-                { src: 'img/gallery/fantasy-weapon.jpg', alt: 'Image 10' },
-                { src: 'img/gallery/ggr-logo.jpg', alt: 'Image 11' },
-                { src: 'img/gallery/gtav-emergency-logos.jpg', alt: 'Image 12' },
-                { src: 'img/gallery/heart-illustration.jpg', alt: 'Image 13' },
-				{ src: 'img/gallery/kooky-background.jpg', alt: 'Image 14' },
-                { src: 'img/gallery/kraken-wall-art.jpg', alt: 'Image 15' },
-                { src: 'img/gallery/no-tread-logo.jpg', alt: 'Image 16' },
-                { src: 'img/gallery/plum-blossom-canvas.jpg', alt: 'Image 17' },
-                { src: 'img/gallery/ropey-zombie-logo.jpg', alt: 'Image 18' },
-                { src: 'img/gallery/sealife-magazine.jpg', alt: 'Image 19' },
-                { src: 'img/gallery/snow-character.jpg', alt: 'Image 20' },
-                { src: 'img/gallery/space-shirt.jpg', alt: 'Image 21' },
-                { src: 'img/gallery/tech-van.jpg', alt: 'Image 22' },
-                { src: 'img/gallery/temple-shirt.jpg', alt: 'Image 23' },
-                { src: 'img/gallery/thorlar-300.jpg', alt: 'Image 24' },
-                { src: 'img/gallery/tiger-crane-shirt.jpg', alt: 'Image 25' },
-                { src: 'img/gallery/tilted-squid-jersey.jpg', alt: 'Image 26' },
-				{ src: 'img/gallery/tm-logo.jpg', alt: 'Image 27' },
-                { src: 'img/gallery/twitter-banners.jpg', alt: 'Image 28' },
-                { src: 'img/gallery/vibe-clothing.jpg', alt: 'Image 29' },
-                { src: 'img/gallery/warriors-wall-art.jpg', alt: 'Image 30' },
-                { src: 'img/gallery/wolf-head-logo.jpg', alt: 'Image 31' },
-                { src: 'img/gallery/zethnos-chinese-pirate-stream-graphics-package.jpg', alt: 'Image 32' },
-                { src: 'img/gallery/zethnos-emotes.jpg', alt: 'Image 33' },
-                { src: 'img/gallery/zethnos-OBS-full-scenes.jpg', alt: 'Image 34' },
-                { src: 'img/gallery/zombie-head-logo.jpg', alt: 'Image 35' }
-            ];
+        // Array of full-size image URLs (replace with your own)
+        const fullSizeImages = [
+          { src: "img/gallery/alfclaw-burger-food-emotes.jpg", alt: "Image 1" },
+          { src: "img/gallery/bigfoot-full.jpg", alt: "Image 2" },
+          { src: "img/gallery/business-cards.jpg", alt: "Image 3" },
+          { src: "img/gallery/cellmaster-logo.jpg", alt: "Image 4" },
+          { src: "img/gallery/chinese-dragon.jpg", alt: "Image 5" },
+          { src: "img/gallery/dauraane-dragon-logos.jpg", alt: "Image 6" },
+          {
+            src: "img/gallery/dlive-lemon-yellow-stream-graphics.jpg",
+            alt: "Image 7",
+          },
+          { src: "img/gallery/dracux-frog-emotes.jpg", alt: "Image 8" },
+          { src: "img/gallery/falling-candy.jpg", alt: "Image 9" },
+          { src: "img/gallery/fantasy-weapon.jpg", alt: "Image 10" },
+          { src: "img/gallery/ggr-logo.jpg", alt: "Image 11" },
+          { src: "img/gallery/gtav-emergency-logos.jpg", alt: "Image 12" },
+          { src: "img/gallery/heart-illustration.jpg", alt: "Image 13" },
+          { src: "img/gallery/kooky-background.jpg", alt: "Image 14" },
+          { src: "img/gallery/kraken-wall-art.jpg", alt: "Image 15" },
+          { src: "img/gallery/no-tread-logo.jpg", alt: "Image 16" },
+          { src: "img/gallery/plum-blossom-canvas.jpg", alt: "Image 17" },
+          { src: "img/gallery/ropey-zombie-logo.jpg", alt: "Image 18" },
+          { src: "img/gallery/sealife-magazine.jpg", alt: "Image 19" },
+          { src: "img/gallery/snow-character.jpg", alt: "Image 20" },
+          { src: "img/gallery/space-shirt.jpg", alt: "Image 21" },
+          { src: "img/gallery/tech-van.jpg", alt: "Image 22" },
+          { src: "img/gallery/temple-shirt.jpg", alt: "Image 23" },
+          { src: "img/gallery/thorlar-300.jpg", alt: "Image 24" },
+          { src: "img/gallery/tiger-crane-shirt.jpg", alt: "Image 25" },
+          { src: "img/gallery/tilted-squid-jersey.jpg", alt: "Image 26" },
+          { src: "img/gallery/tm-logo.jpg", alt: "Image 27" },
+          { src: "img/gallery/twitter-banners.jpg", alt: "Image 28" },
+          { src: "img/gallery/vibe-clothing.jpg", alt: "Image 29" },
+          { src: "img/gallery/warriors-wall-art.jpg", alt: "Image 30" },
+          { src: "img/gallery/wolf-head-logo.jpg", alt: "Image 31" },
+          {
+            src: "img/gallery/zethnos-chinese-pirate-stream-graphics-package.jpg",
+            alt: "Image 32",
+          },
+          { src: "img/gallery/zethnos-emotes.jpg", alt: "Image 33" },
+          { src: "img/gallery/zethnos-OBS-full-scenes.jpg", alt: "Image 34" },
+          { src: "img/gallery/zombie-head-logo.jpg", alt: "Image 35" },
+        ];
 
-            // Shuffle images array (Fisher-Yates shuffle)
-            function shuffle(array) {
-                for (let i = array.length - 1; i > 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [array[i], array[j]] = [array[j], array[i]];
-                }
-                return array;
+        // Shuffle images array (Fisher-Yates shuffle)
+        function shuffle(array) {
+          for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+          }
+          return array;
+        }
+
+        // Shuffle images on page load
+        const shuffledImages = shuffle([...fullSizeImages]);
+
+        // Function to create thumbnail from full-size image
+        function createThumbnail(fullImageSrc, alt, callback) {
+          const img = new Image();
+          img.crossOrigin = "Anonymous"; // For cross-origin images
+          img.src = fullImageSrc;
+          img.onload = () => {
+            const canvas = document.createElement("canvas");
+            const ctx = canvas.getContext("2d");
+            const maxWidth = 400; // Thumbnail width
+            const maxHeight = 300; // Thumbnail height
+            let width = img.width;
+            let height = img.height;
+
+            // Calculate dimensions to maintain aspect ratio
+            if (width > height) {
+              if (width > maxWidth) {
+                height = Math.round((height * maxWidth) / width);
+                width = maxWidth;
+              }
+            } else {
+              if (height > maxHeight) {
+                width = Math.round((width * maxHeight) / height);
+                height = maxHeight;
+              }
             }
 
-            // Shuffle images on page load
-            const shuffledImages = shuffle([...fullSizeImages]);
+            canvas.width = width;
+            canvas.height = height;
+            ctx.drawImage(img, 0, 0, width, height);
+            callback(canvas.toDataURL("image/jpeg"), alt);
+          };
+          img.onerror = () => {
+            console.error(`Failed to load image: ${fullImageSrc}`);
+            callback(fullImageSrc, alt); // Fallback to full image if thumbnail fails
+          };
+        }
 
-            // Function to create thumbnail from full-size image
-            function createThumbnail(fullImageSrc, alt, callback) {
-                const img = new Image();
-                img.crossOrigin = 'Anonymous'; // For cross-origin images
-                img.src = fullImageSrc;
-                img.onload = () => {
-                    const canvas = document.createElement('canvas');
-                    const ctx = canvas.getContext('2d');
-                    const maxWidth = 400; // Thumbnail width
-                    const maxHeight = 300; // Thumbnail height
-                    let width = img.width;
-                    let height = img.height;
-
-                    // Calculate dimensions to maintain aspect ratio
-                    if (width > height) {
-                        if (width > maxWidth) {
-                            height = Math.round((height * maxWidth) / width);
-                            width = maxWidth;
-                        }
-                    } else {
-                        if (height > maxHeight) {
-                            width = Math.round((width * maxHeight) / height);
-                            height = maxHeight;
-                        }
-                    }
-
-                    canvas.width = width;
-                    canvas.height = height;
-                    ctx.drawImage(img, 0, 0, width, height);
-                    callback(canvas.toDataURL('image/jpeg'), alt);
-                };
-                img.onerror = () => {
-                    console.error(`Failed to load image: ${fullImageSrc}`);
-                    callback(fullImageSrc, alt); // Fallback to full image if thumbnail fails
-                };
-            }
-
-            // Populate gallery with thumbnails
-            shuffledImages.forEach((image, index) => {
-                createThumbnail(image.src, image.alt, (thumbnailSrc, alt) => {
-                    const col = document.createElement('div');
-                    col.className = 'col';
-                    col.innerHTML = `
+        // Populate gallery with thumbnails
+        shuffledImages.forEach((image, index) => {
+          createThumbnail(image.src, image.alt, (thumbnailSrc, alt) => {
+            const col = document.createElement("div");
+            col.className = "col";
+            col.innerHTML = `
                         <div class="gallery-item" data-index="${index}">
                             <img src="${thumbnailSrc}" alt="${alt}">
                             <div class="gallery-item-overlay">
@@ -359,60 +224,65 @@
                             </div>
                         </div>
                     `;
-                    gallery.appendChild(col);
-                });
-            });
-
-            // Function to show image in lightbox
-            function showImage(index) {
-                if (index >= 0 && index < shuffledImages.length) {
-                    currentIndex = index;
-                    lightboxImg.src = shuffledImages[index].src;
-                    lightboxImg.alt = shuffledImages[index].alt;
-                    lightbox.style.display = 'flex';
-                }
-            }
-
-            // Event delegation for gallery items
-            gallery.addEventListener('click', (e) => {
-                const galleryItem = e.target.closest('.gallery-item');
-                if (galleryItem) {
-                    const index = parseInt(galleryItem.dataset.index);
-                    showImage(index);
-                }
-            });
-
-            lightboxPrev.addEventListener('click', () => {
-                showImage((currentIndex - 1 + shuffledImages.length) % shuffledImages.length);
-            });
-
-            lightboxNext.addEventListener('click', () => {
-                showImage((currentIndex + 1) % shuffledImages.length);
-            });
-
-            lightboxClose.addEventListener('click', () => {
-                lightbox.style.display = 'none';
-            });
-
-            lightbox.addEventListener('click', (e) => {
-                if (e.target === lightbox) {
-                    lightbox.style.display = 'none';
-                }
-            });
-
-            // Keyboard navigation
-            document.addEventListener('keydown', (e) => {
-                if (lightbox.style.display === 'flex') {
-                    if (e.key === 'ArrowLeft') {
-                        showImage((currentIndex - 1 + shuffledImages.length) % shuffledImages.length);
-                    } else if (e.key === 'ArrowRight') {
-                        showImage((currentIndex + 1) % shuffledImages.length);
-                    } else if (e.key === 'Escape') {
-                        lightbox.style.display = 'none';
-                    }
-                }
-            });
+            gallery.appendChild(col);
+          });
         });
+
+        // Function to show image in lightbox
+        function showImage(index) {
+          if (index >= 0 && index < shuffledImages.length) {
+            currentIndex = index;
+            lightboxImg.src = shuffledImages[index].src;
+            lightboxImg.alt = shuffledImages[index].alt;
+            lightbox.style.display = "flex";
+          }
+        }
+
+        // Event delegation for gallery items
+        gallery.addEventListener("click", (e) => {
+          const galleryItem = e.target.closest(".gallery-item");
+          if (galleryItem) {
+            const index = parseInt(galleryItem.dataset.index);
+            showImage(index);
+          }
+        });
+
+        lightboxPrev.addEventListener("click", () => {
+          showImage(
+            (currentIndex - 1 + shuffledImages.length) % shuffledImages.length
+          );
+        });
+
+        lightboxNext.addEventListener("click", () => {
+          showImage((currentIndex + 1) % shuffledImages.length);
+        });
+
+        lightboxClose.addEventListener("click", () => {
+          lightbox.style.display = "none";
+        });
+
+        lightbox.addEventListener("click", (e) => {
+          if (e.target === lightbox) {
+            lightbox.style.display = "none";
+          }
+        });
+
+        // Keyboard navigation
+        document.addEventListener("keydown", (e) => {
+          if (lightbox.style.display === "flex") {
+            if (e.key === "ArrowLeft") {
+              showImage(
+                (currentIndex - 1 + shuffledImages.length) %
+                  shuffledImages.length
+              );
+            } else if (e.key === "ArrowRight") {
+              showImage((currentIndex + 1) % shuffledImages.length);
+            } else if (e.key === "Escape") {
+              lightbox.style.display = "none";
+            }
+          }
+        });
+      });
     </script>
-</body>
+  </body>
 </html>

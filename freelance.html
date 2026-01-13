@@ -1,241 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Zethnos Freelance Services | Custom Art & Websites</title>
-    <meta name="description" content="Zethnos offers freelance services including custom digital art and website design. Join the waitlist for future commissions.">
-    <meta property="og:title" content="Zethnos Freelance Services | Custom Art & Websites">
-    <meta property="og:description" content="Explore Zethnos's freelance offerings, including custom digital art and website design. Join the waitlist today.">
-    <meta property="og:image" content="https://www.zethnos.com/images/freelance-og-image.jpg">
-    <meta property="og:url" content="https://www.zethnos.com/freelance.html">
-    <meta name="twitter:card" content="summary_large_image">
-    <link rel="canonical" href="https://www.zethnos.com/freelance.html">
+    <meta
+      name="description"
+      content="Zethnos offers freelance services including custom digital art and website design. Join the waitlist for future commissions."
+    />
+    <meta
+      property="og:title"
+      content="Zethnos Freelance Services | Custom Art & Websites"
+    />
+    <meta
+      property="og:description"
+      content="Explore Zethnos's freelance offerings, including custom digital art and website design. Join the waitlist today."
+    />
+    <meta
+      property="og:image"
+      content="https://www.zethnos.com/images/freelance-og-image.jpg"
+    />
+    <meta property="og:url" content="https://www.zethnos.com/freelance.html" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="canonical" href="https://www.zethnos.com/freelance.html" />
     <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Service",
-      "serviceType": "Freelance Digital Art and Web Design",
-      "provider": {
-        "@type": "Person",
-        "name": "Zethnos",
-        "url": "https://www.zethnos.com"
-      },
-      "description": "Zethnos provides custom digital art and website design services. Currently not accepting new clients, but join the waitlist for future opportunities."
-    }
+      {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "serviceType": "Freelance Digital Art and Web Design",
+        "provider": {
+          "@type": "Person",
+          "name": "Zethnos",
+          "url": "https://www.zethnos.com"
+        },
+        "description": "Zethnos provides custom digital art and website design services. Currently not accepting new clients, but join the waitlist for future opportunities."
+      }
     </script>
-	<link rel="icon" type="image/x-icon" href="img/favicon/favicon.ico">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Bungee&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        h1, h2, h3 {
-            font-family: 'Bungee', cursive;
-            color: #fff; /* White for headers */
-            font-weight: normal; /* Ensure headers are not bold */
-            position: relative; /* For positioning the underline */
-            transition: color 0.3s ease; /* Smooth color transition (if needed) */
-			margin-bottom: 20px;
-        }
-        h1:not(.zethnos-title)::after,
-        h2::after,
-        h3::after {
-            content: '';
-            position: absolute;
-            width: 100%; /* Full underline for headers */
-            height: 2px;
-            bottom: -4px; /* Position underline below text */
-            left: 0;
-            background-color: #00ff00; /* Orange underline */
-        }
-        .zethnos-card h1.zethnos-title {
-            font-size: 3rem; /* Larger title for Zethnos card */
-			padding-bottom: 0px;
-			margin-bottom: 0px;
-        }
-        .social-logos {
-            display: flex;
-            justify-content: flex-start; /* Align logos to the left */
-            gap: 1rem; /* Space between logos */
-            margin-top: 0.5rem; /* Space below title */
-            width: fit-content; /* Match the width of the h1 title content */
-			margin-bottom: 2rem;
-        }
-        .social-logos img {
-            width: 32px; /* Size of social media logos */
-            height: 32px;
-        }
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 2rem;
-            background-color: #111; /* Dark background */
-            color: #fff; /* White for body text */
-        }
-        nav {
-            background-color: transparent;
-        }
-        .navbar-nav {
-            font-family: 'Bungee', sans-serif;
-        }
-        .navbar-nav .nav-link {
-            color: #d3d3d3; /* Light grey for inactive links */
-            position: relative;
-            transition: color 0.3s ease;
-        }
-        .navbar-nav .nav-link:hover {
-            color: #ffffff; /* White on hover */
-        }
-        .navbar-nav .nav-link.active {
-            color: #ffffff; /* White for active link */
-        }
-        /* Orange underline for active link */
-        .navbar-nav .nav-link.active::after {
-            content: '';
-            position: absolute;
-            width: calc(100% - 0.5em); /* Stop underline at text end */
-            height: 2px;
-            bottom: 0;
-            left: 0.25em; /* Center underline under text */
-            background-color: #ff6200; /* Orange */
-        }
-        /* Orange underline animation for hover */
-        .navbar-nav .nav-link::before {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: 0;
-            left: 0.25em; /* Center underline under text */
-            background-color: #ff6200; /* Orange */
-            transition: width 0.3s ease;
-        }
-        .navbar-nav .nav-link:hover::before {
-            width: calc(100% - 0.5em); /* Stop underline at text end */
-        }
-        /* White hamburger icon */
-        .navbar-toggler-icon {
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 1)' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
-        }
-        .card {
-            background-color: #222; /* Slightly lighter than body for card contrast */
-            border: none; /* No border for cards */
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            padding: 2rem;
-            margin: 1rem auto;
-            max-width: 600px;
-            text-align: center;
-            color: #fff; /* White for card text */
-            display: flex;
-            flex-direction: column;
-            justify-content: center; /* Center content vertically */
-            min-height: 150px; /* Ensure enough height for vertical centering */
-        }
-        .zethnos-card, .logo-card, .minor-card {
-            background-color: transparent; /* No background for Zethnos and logo cards */
-            border: none; /* No border for Zethnos and logo cards */
-            box-shadow: none; /* No shadow for Zethnos and logo cards */
-            padding: 2rem;
-            margin: 1rem auto;
-            max-width: 600px;
-            text-align: center; /* Default for logo card */
-            color: #fff; /* White for card text */
-            display: flex;
-            flex-direction: column;
-            justify-content: center; /* Center content vertically */
-            min-height: 150px; /* Ensure enough height for vertical centering */
-        }
-        .zethnos-card {
-            text-align: left; /* Left-justify text in Zethnos card */
-        }
-        .zethnos-card a {
-            display: block; /* Center the button */
-            margin: 0.5rem auto; /* Center horizontally */
-            width: fit-content; /* Keep button width to content */
-        }
-        .card img, .zethnos-card img, .logo-card img {
-            max-width: 100%;
-            height: auto;
-        }
-        @media (min-width: 768px) {
-            .card-container {
-                display: flex;
-                gap: 1rem;
-                width: 100%;
-				max-width: 1250px;
-				margin-left: auto;
-				margin-right: auto;
-            }
-            .zethnos-card, .logo-card {
-                max-width: 50vw; /* Each card takes half the screen width */
-                width: 50%; /* Ensure equal width distribution */
-                box-sizing: border-box; /* Include padding in width calculation */
-            }
-			.minor-card {
-                max-width: 33vw; /* Each card takes half the screen width */
-                width: 33%; /* Ensure equal width distribution */
-                box-sizing: border-box; /* Include padding in width calculation */
-				height: 100%;
-            }
-        }
-		.btn-custom {
-            background-color: #111;
-            color: #fff;
-            border-width: 3px;
-            border-color: #fe5b16;
-            width: 100%;
-            margin-bottom: 10px;
-        }
-        .btn-custom:hover {
-            background-color: #e03a00;
-        }
-		.card-title, .btn-custom {
-            font-family: 'Bungee', cursive;
-            color: #fff;
-        }
-		.text-center-all * {
-            text-align: center;
-        }
-
-    </style>
-</head>
-<body>
+    <link rel="icon" type="image/x-icon" href="img/favicon/favicon.ico" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bungee&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <nav class="navbar navbar-expand-lg">
-        <div class="container-fluid">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="index.html">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="gallery.html">Art Gallery</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#freelance">Freelance</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="socials.html">Socials</a>
-                    </li>
-                </ul>
-            </div>
+      <div class="container-fluid">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div
+          class="collapse navbar-collapse justify-content-center"
+          id="navbarNav"
+        >
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="index.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="gallery.html">Art Gallery</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="#freelance">Freelance</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="socials.html">Socials</a>
+            </li>
+          </ul>
         </div>
+      </div>
     </nav>
 
     <div class="card-container">
-        <section class="zethnos-card">
-            <h2>Freelancing</h2>
-            <p>Detailed information coming soon!</p>
-			<p>Currently not taking on clients.</p>
-        </section>
+      <section class="zethnos-card">
+        <h2>Freelancing</h2>
+        <p>Detailed information coming soon!</p>
+        <p>Currently not taking on clients.</p>
+      </section>
 
-        <section class="logo-card">
-            <img src="img/logo.png" alt="Zethnos Logo">
-        </section>
+      <section class="logo-card">
+        <img src="img/logo.png" alt="Zethnos Logo" />
+      </section>
     </div>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-</body>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>

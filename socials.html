@@ -1,210 +1,211 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Zethnos Socials | Streaming & Community</title>
-    <meta name="description" content="Join Zethnos on Twitch, YouTube, and Discord for streaming, co-working, and Marvel Rivals content.">
-    <meta property="og:title" content="Zethnos Socials | Streaming & Community">
-    <meta property="og:description" content="Connect with Zethnos for live streams, co-working sessions, and Marvel Rivals gameplay on Twitch, YouTube, and more.">
-    <meta property="og:image" content="https://www.zethnos.com/images/socials-og-image.jpg">
-    <meta property="og:url" content="https://www.zethnos.com/socials.html">
-    <meta name="twitter:card" content="summary_large_image">
-    <link rel="canonical" href="https://www.zethnos.com/socials.html">
+    <meta
+      name="description"
+      content="Join Zethnos on Twitch, YouTube, and Discord for streaming, co-working, and Marvel Rivals content."
+    />
+    <meta
+      property="og:title"
+      content="Zethnos Socials | Streaming & Community"
+    />
+    <meta
+      property="og:description"
+      content="Connect with Zethnos for live streams, co-working sessions, and Marvel Rivals gameplay on Twitch, YouTube, and more."
+    />
+    <meta
+      property="og:image"
+      content="https://www.zethnos.com/images/socials-og-image.jpg"
+    />
+    <meta property="og:url" content="https://www.zethnos.com/socials.html" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="canonical" href="https://www.zethnos.com/socials.html" />
     <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Zethnos",
-      "url": "https://www.zethnos.com",
-      "sameAs": [
-        "https://www.twitch.tv/zethnos",
-        "https://kick.com/zethnos",
-        "https://www.youtube.com/@zethnos",
-        "https://www.tiktok.com/@zethnos",
-        "https://x.com/zethnos",
-        "https://discord.gg/zethnos"
-      ]
-    }
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Zethnos",
+        "url": "https://www.zethnos.com",
+        "sameAs": [
+          "https://www.twitch.tv/zethnos",
+          "https://kick.com/zethnos",
+          "https://www.youtube.com/@zethnos",
+          "https://www.tiktok.com/@zethnos",
+          "https://x.com/zethnos",
+          "https://discord.gg/zethnos"
+        ]
+      }
     </script>
-	<link rel="icon" type="image/x-icon" href="img/favicon/favicon.ico">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Bungee&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="img/favicon/favicon.ico" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bungee&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 2rem;
-            background-color: #111; /* Dark background */
-            color: #fff; /* White for body text */
-        }
-		nav {
-            background-color: transparent;
-        }
-        .navbar-nav {
-            font-family: 'Bungee', sans-serif;
-        }
-        .navbar-nav .nav-link {
-            color: #d3d3d3; /* Light grey for inactive links */
-            position: relative;
-            transition: color 0.3s ease;
-        }
-        .navbar-nav .nav-link:hover {
-            color: #ffffff; /* White on hover */
-        }
-        .navbar-nav .nav-link.active {
-            color: #ffffff; /* White for active link */
-        }
-        /* Orange underline for active link */
-        .navbar-nav .nav-link.active::after {
-            content: '';
-            position: absolute;
-            width: calc(100% - 0.5em); /* Stop underline at text end */
-            height: 2px;
-            bottom: 0;
-            left: 0.25em; /* Center underline under text */
-            background-color: #ff6200; /* Orange */
-        }
-        /* Orange underline animation for hover */
-        .navbar-nav .nav-link::before {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: 0;
-            left: 0.25em; /* Center underline under text */
-            background-color: #ff6200; /* Orange */
-            transition: width 0.3s ease;
-        }
-        .navbar-nav .nav-link:hover::before {
-            width: calc(100% - 0.5em); /* Stop underline at text end */
-        }
-        /* White hamburger icon */
-        .navbar-toggler-icon {
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 1)' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
-        }
-        .header-img {
-            max-width: 200px;
-            margin-bottom: 20px;
-        }
-        .card {
-            background-color: #222;
-            border: none;
-            margin-bottom: 10px;
-        }
-		.business a {
-		color: #ff6200;
-		}
-		.business a:hover {
-		color: #e03a00;
-		}
-        .card-title, .btn-custom {
-            font-family: 'Bungee', cursive;
-            color: #00ff00;
-            padding-bottom: 10px;
-        }
-        h1 {
-            font-family: 'Bungee', cursive;
-        }
-        .btn-custom {
-            background-color: #222;
-            color: #fff;
-            border-width: 3px;
-            border-color: #fe5b16;
-            width: 100%;
-            margin-bottom: 10px;
-        }
-        .btn-custom:hover {
-            background-color: #e03a00;
-        }
-        .text-center-all * {
-            text-align: center;
-        }
+      /* Stream schedule specific overrides */
+      #schedule-list a {
+        color: #fff;
+        text-decoration: none;
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+      }
+      #schedule-list li.live a {
+        color: #00ff00;
+        font-weight: 600;
+      }
     </style>
-</head>
-<body>
-<nav class="navbar navbar-expand-lg">
-        <div class="container-fluid">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="index.html">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="gallery.html">Art Gallery</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="freelance.html">Freelance</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">Socials</a>
-                    </li>
-                </ul>
-            </div>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg">
+      <div class="container-fluid">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div
+          class="collapse navbar-collapse justify-content-center"
+          id="navbarNav"
+        >
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="index.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="gallery.html">Art Gallery</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="freelance.html">Freelance</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="#">Socials</a>
+            </li>
+          </ul>
         </div>
+      </div>
     </nav>
+
     <div class="container text-center py-5 text-center-all">
-        <a href="index.html"><img src="img/logo.png" alt="Zethnos Logo" class="header-img"></a>
-        <h1 class="display-4">Zethnos</h1>
-        <p class="lead">Let's get stuff done together!</p>
+      <a href="index.html"
+        ><img src="img/logo.png" alt="Zethnos Logo" class="header-img"
+      /></a>
+      <h1 class="display-4">Zethnos</h1>
+      <p class="lead">Let's get stuff done together!</p>
     </div>
 
     <div class="container">
-        <div class="row">
-            <div class="col-12 col-md-6 mx-auto mb-4">
-                <div class="card h-100">
-                    <div class="card-body text-center-all">
-                        <h2 class="card-title">Streaming Schedule</h2>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item bg-transparent text-white"><strong>Mon, Wed, Fri: 9 AM – 12 PM EST</strong><br>Co-working &amp; Body Doubling with Chat</li>
-                            <li class="list-group-item bg-transparent text-white"><strong>Tues & Thurs: 6 – 10 PM EST</strong><br>Marvel Rivals - Best Support NA!</li>
-                        </ul>
-                    </div>
-                </div>
+      <!-- Dynamic Schedule Card -->
+      <div class="row">
+        <div class="col-12 col-md-6 mx-auto mb-4">
+          <div class="card h-100" id="stream-schedule">
+            <div class="card-body text-center-all">
+              <h2 class="card-title">Schedule</h2>
+              <h5>Co-Working</h5>
+
+              <!-- Next Stream -->
+              <div id="next-stream">
+                <h6>Next stream</h6>
+                <div id="next-stream-time"></div>
+              </div>
+
+              <!-- Countdown -->
+              <div
+                id="countdown"
+                class="text-center fw-semibold text-warning mb-3"
+              ></div>
+
+              <!-- Schedule list -->
+              <ul id="schedule-list" class="list-group list-group-flush"></ul>
             </div>
+          </div>
         </div>
-        <div class="row">
-            <div class="col-12 col-md-6 mx-auto mb-4">
-                <div class="card h-100">
-                    <div class="card-body text-center-all">
-                        <h2 class="card-title">Connect with Me</h2>
-                        <div class="d-grid gap-2">
-                            <a href="https://twitch.tv/zethnos" rel="nofollow" class="btn btn-custom">Twitch</a>
-                            <a href="http://kick.com/zethnos" rel="nofollow" class="btn btn-custom">Kick</a>
-                            <a href="http://youtube.com/@zethnos" rel="nofollow" class="btn btn-custom">YouTube</a>
-                            <a href="https://tiktok.com/@zethnos" rel="nofollow" class="btn btn-custom">TikTok</a>
-                            <a href="https://x.com/zethnos" rel="nofollow" class="btn btn-custom">X Profile</a>
-                            <a href="https://discord.gg/MZfSsdnJea" rel="nofollow" class="btn btn-custom">Discord Community</a>
-                        </div>
-                    </div>
-                </div>
+      </div>
+
+      <!-- Socials Card -->
+      <div class="row">
+        <div class="col-12 col-md-6 mx-auto mb-4">
+          <div class="card h-100">
+            <div class="card-body text-center-all">
+              <h2 class="card-title">Socials</h2>
+              <div class="d-grid gap-2">
+                <a
+                  href="https://discord.gg/MZfSsdnJea"
+                  rel="nofollow"
+                  class="btn btn-custom"
+                  >Discord</a
+                >
+                <a
+                  href="https://twitch.tv/zethnos"
+                  rel="nofollow"
+                  class="btn btn-custom"
+                  >Twitch</a
+                >
+                <a
+                  href="http://youtube.com/@zethnos"
+                  rel="nofollow"
+                  class="btn btn-custom"
+                  >YouTube</a
+                >
+                <a
+                  href="https://tiktok.com/@zethnos"
+                  rel="nofollow"
+                  class="btn btn-custom"
+                  >TikTok</a
+                >
+              </div>
             </div>
+          </div>
         </div>
-		<div class="row">
-            <div class="col-12 col-md-6 mx-auto mb-4">
-                <div class="card business h-100">
-                    <div class="card-body text-center-all">
-                        <h2 class="card-title">Business Contact</h2>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item bg-transparent text-white"><a href="mailto:business@zethnos.com">business@zethnos.com</a></li>
-                        </ul>
-                    </div>
-                </div>
+      </div>
+
+      <!-- Business Card -->
+      <div class="row">
+        <div class="col-12 col-md-6 mx-auto mb-4">
+          <div class="card business h-100">
+            <div class="card-body text-center-all">
+              <h2 class="card-title">Email</h2>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item bg-transparent text-white">
+                  <a href="mailto:business@zethnos.com">business@zethnos.com</a>
+                </li>
+              </ul>
             </div>
+          </div>
         </div>
-        <div class="row">
-            <div class="col-12 col-md-6 mx-auto mb-4">
-                <footer class="text-center-all py-3">
-                    <p>© 2025 Zethnos. All rights reserved.</p>
-                </footer>
-            </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="row">
+        <div class="col-12 col-md-6 mx-auto mb-4">
+          <footer class="text-center-all py-3">
+            <p>© 2025 Zethnos. All rights reserved.</p>
+          </footer>
         </div>
+      </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+
+    <!-- Dynamic Schedule JS -->
+    <script src="stream-schedule.js"></script>
+  </body>
 </html>
