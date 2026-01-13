@@ -3,7 +3,6 @@ const TWITCH_URL = "https://twitch.tv/zethnos";
 
 const SCHEDULE = [
   { day: 1, time: "8:00", durationHours: 4 },
-  { day: 2, time: "8:00", durationHours: 4 },
   { day: 3, time: "8:00", durationHours: 4 },
   { day: 4, time: "8:00", durationHours: 4 },
   { day: 5, time: "8:00", durationHours: 4 },
