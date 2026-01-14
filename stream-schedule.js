@@ -23,11 +23,16 @@ scheduleList.parentNode.appendChild(twitchEmbedContainer);
 // ---- Twitch embed state ----
 let twitchEmbedVisible = false;
 
-// ---- Helpers ----
+// ---- EST helpers ----
+function getNowEST() {
+  return new Date(
+    new Date().toLocaleString("en-US", { timeZone: STREAM_TIMEZONE })
+  );
+}
+
 function formatTimeEST(date) {
   return (
     date.toLocaleTimeString("en-US", {
-      timeZone: STREAM_TIMEZONE,
       hour: "numeric",
       minute: "2-digit",
       hour12: true,
@@ -35,9 +40,9 @@ function formatTimeEST(date) {
   );
 }
 
-// ---- Live detection ----
+// ---- Live detection (EST only) ----
 function isCurrentlyLive() {
-  const now = new Date();
+  const now = getNowEST();
 
   return SCHEDULE.some((stream) => {
     if (stream.day !== now.getDay()) return false;
@@ -51,9 +56,9 @@ function isCurrentlyLive() {
   });
 }
 
-// ---- Next stream ----
+// ---- Next stream (EST only) ----
 function getNextStream() {
-  const now = new Date();
+  const now = getNowEST();
 
   for (let i = 0; i < 14; i++) {
     const testDate = new Date(now);
@@ -63,10 +68,7 @@ function getNextStream() {
       if (testDate.getDay() !== stream.day) continue;
 
       const [h, m] = stream.time.split(":").map(Number);
-
-      const streamDate = new Date(
-        testDate.toLocaleString("en-US", { timeZone: STREAM_TIMEZONE })
-      );
+      const streamDate = new Date(testDate);
       streamDate.setHours(h, m, 0, 0);
 
       if (streamDate > now) {
@@ -77,8 +79,9 @@ function getNextStream() {
   return null;
 }
 
-// ---- Countdown + live state controller ----
+// ---- Countdown + live controller (EST only) ----
 function updateCountdown() {
+  const now = getNowEST();
   const live = isCurrentlyLive();
 
   if (live) {
@@ -95,7 +98,7 @@ function updateCountdown() {
   const next = getNextStream();
   if (!next) return;
 
-  const diff = next.date - new Date();
+  const diff = next.date - now;
   const hours = Math.floor(diff / 1000 / 60 / 60);
   const minutes = Math.floor((diff / 1000 / 60) % 60);
   const seconds = Math.floor((diff / 1000) % 60);
@@ -129,34 +132,31 @@ function hideTwitchEmbed() {
   twitchEmbedContainer.innerHTML = "";
 }
 
-// ---- Schedule rendering ----
+// ---- Schedule rendering (EST only) ----
 function renderSchedule() {
   scheduleList.innerHTML = "";
-  const now = new Date();
+  const now = getNowEST();
 
   SCHEDULE.forEach((stream) => {
     const [h, m] = stream.time.split(":").map(Number);
 
-    const tempDate = new Date(
-      now.toLocaleString("en-US", { timeZone: STREAM_TIMEZONE })
-    );
-    tempDate.setDate(now.getDate() + ((stream.day - now.getDay() + 7) % 7));
-    tempDate.setHours(h, m, 0, 0);
+    const streamDate = new Date(now);
+    streamDate.setDate(now.getDate() + ((stream.day - now.getDay() + 7) % 7));
+    streamDate.setHours(h, m, 0, 0);
 
-    const end = new Date(tempDate.getTime() + stream.durationHours * 3600000);
+    const end = new Date(streamDate.getTime() + stream.durationHours * 3600000);
 
     const li = document.createElement("li");
     li.className =
       "list-group-item d-flex justify-content-between align-items-center";
 
-    const dayLabel = tempDate.toLocaleDateString("en-US", {
+    const dayLabel = streamDate.toLocaleDateString("en-US", {
       weekday: "long",
-      timeZone: STREAM_TIMEZONE,
     });
 
-    const timeLabel = formatTimeEST(tempDate);
+    const timeLabel = formatTimeEST(streamDate);
 
-    if (now >= tempDate && now <= end) {
+    if (now >= streamDate && now <= end) {
       li.classList.add("live");
 
       li.innerHTML = `
