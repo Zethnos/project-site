@@ -1,4 +1,5 @@
 const STREAM_TIMEZONE = "America/New_York";
+const TIMEZONE_LABEL = "EST";
 const TWITCH_URL = "https://twitch.tv/zethnos";
 
 const SCHEDULE = [
@@ -21,6 +22,18 @@ scheduleList.parentNode.appendChild(twitchEmbedContainer);
 
 // ---- Twitch embed state ----
 let twitchEmbedVisible = false;
+
+// ---- Helpers ----
+function formatTimeEST(date) {
+  return (
+    date.toLocaleTimeString("en-US", {
+      timeZone: STREAM_TIMEZONE,
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+    }) + ` ${TIMEZONE_LABEL}`
+  );
+}
 
 // ---- Live detection ----
 function isCurrentlyLive() {
@@ -56,14 +69,8 @@ function getNextStream() {
       );
       streamDate.setHours(h, m, 0, 0);
 
-      const localStreamDate = new Date(
-        streamDate.toLocaleString("en-US", {
-          timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-        })
-      );
-
-      if (localStreamDate > now) {
-        return { stream, date: localStreamDate };
+      if (streamDate > now) {
+        return { stream, date: streamDate };
       }
     }
   }
@@ -122,7 +129,7 @@ function hideTwitchEmbed() {
   twitchEmbedContainer.innerHTML = "";
 }
 
-// ---- Schedule rendering (NO embed logic here) ----
+// ---- Schedule rendering ----
 function renderSchedule() {
   scheduleList.innerHTML = "";
   const now = new Date();
@@ -130,7 +137,9 @@ function renderSchedule() {
   SCHEDULE.forEach((stream) => {
     const [h, m] = stream.time.split(":").map(Number);
 
-    const tempDate = new Date();
+    const tempDate = new Date(
+      now.toLocaleString("en-US", { timeZone: STREAM_TIMEZONE })
+    );
     tempDate.setDate(now.getDate() + ((stream.day - now.getDay() + 7) % 7));
     tempDate.setHours(h, m, 0, 0);
 
@@ -140,13 +149,12 @@ function renderSchedule() {
     li.className =
       "list-group-item d-flex justify-content-between align-items-center";
 
-    const dayLabel = tempDate.toLocaleDateString(undefined, {
+    const dayLabel = tempDate.toLocaleDateString("en-US", {
       weekday: "long",
+      timeZone: STREAM_TIMEZONE,
     });
-    const timeLabel = tempDate.toLocaleTimeString([], {
-      hour: "numeric",
-      minute: "2-digit",
-    });
+
+    const timeLabel = formatTimeEST(tempDate);
 
     if (now >= tempDate && now <= end) {
       li.classList.add("live");
@@ -173,5 +181,5 @@ function renderSchedule() {
 renderSchedule();
 updateCountdown();
 
-setInterval(updateCountdown, 1000);       // countdown + live state
-setInterval(renderSchedule, 60 * 1000);   // schedule refresh
+setInterval(updateCountdown, 1000);
+setInterval(renderSchedule, 60 * 1000);
