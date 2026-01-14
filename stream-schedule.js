@@ -155,5 +155,5 @@ function renderSchedule() {
 // Initial render & countdown
 renderSchedule();
 updateCountdown();
-setInterval(updateCountdown, 1000);
+setInterval(updateCountdown, 10000);
 setInterval(renderSchedule, 60 * 1000); // Refresh schedule every minute
