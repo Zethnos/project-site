@@ -173,6 +173,8 @@
             >
           </div>
         </div>
+        <div id="followers">—</div>
+<div id="status">—</div>
       </section>
       <section class="minor-card business">
         <h2>Shop & Support</h2>
@@ -197,5 +199,20 @@
       crossorigin="anonymous"
     ></script>
     <script src="stream-schedule.js"></script>
+    <script>
+async function loadTwitch() {
+  const res = await fetch("/api/twitch.php");
+  const data = await res.json();
+
+  document.getElementById("followers").textContent =
+    data.followers.toLocaleString();
+
+  document.getElementById("status").textContent =
+    data.live ? "LIVE 🔴" : "Offline";
+}
+
+loadTwitch();
+setInterval(loadTwitch, 60000);
+</script>
   </body>
 </html>
