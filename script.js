@@ -1,62 +1,3 @@
-/*************************************************
- * CONFIG
- *************************************************/
-
-const TWITCH_API_URL = "/api/twitch.php"; // Your PHP endpoint
-const TWITCH_CHANNEL_URL = "https://twitch.tv/zethnos";
-const TIMEZONE_LABEL = "EST"; // Optional, just for display
-
-/*************************************************
- * GLOBAL STATE
- *************************************************/
-
-let TWITCH_STATE = {
-  live: false,
-  category: "",
-  schedule: [], // Will hold Twitch schedule entries
-};
-
-let countdownInterval = null;
-
-/*************************************************
- * TWITCH API
- *************************************************/
-
-async function loadTwitch() {
-  try {
-    const res = await fetch(TWITCH_API_URL);
-    const data = await res.json();
-
-    TWITCH_STATE = {
-      live: data.live || false,
-      category: data.category || "",
-      schedule: data.schedule || [],
-    };
-
-    updateUI();
-  } catch (err) {
-    console.error("Twitch API error:", err);
-  }
-}
-
-/*************************************************
- * SCHEDULE LOGIC
- *************************************************/
-
-function getNextStream() {
-  const now = new Date();
-
-  // Find the next upcoming stream
-  return TWITCH_STATE.schedule
-    .map(entry => ({ ...entry, startDate: new Date(entry.start_time) }))
-    .filter(entry => entry.startDate > now)
-    .sort((a, b) => a.startDate - b.startDate)[0] || null;
-}
-
-/*************************************************
- * UI UPDATE
- *************************************************/
-
 function updateUI() {
   const nextStreamEl = document.getElementById("next-stream-time");
   const countdownEl = document.getElementById("countdown");
@@ -64,15 +5,24 @@ function updateUI() {
 
   if (!nextStreamEl || !countdownEl || !scheduleEl) return;
 
-  // Clear schedule
   scheduleEl.innerHTML = "";
 
-  // Populate schedule from Twitch
+  if (!TWITCH_STATE.schedule || !TWITCH_STATE.schedule.length) {
+    nextStreamEl.textContent = "No upcoming streams";
+    countdownEl.textContent = "";
+    scheduleEl.innerHTML = "<li class='list-group-item'>No upcoming streams</li>";
+    return;
+  }
+
+  // Populate schedule
   TWITCH_STATE.schedule.forEach(entry => {
+    if (!entry.start_time) return; // skip invalid entries
     const li = document.createElement("li");
     li.className = "list-group-item";
 
     const startDate = new Date(entry.start_time);
+    if (isNaN(startDate)) return;
+
     const dayName = startDate.toLocaleDateString("en-US", { weekday: "long" });
     const timeStr = startDate.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
 
@@ -83,7 +33,6 @@ function updateUI() {
     scheduleEl.appendChild(li);
   });
 
-  // Live vs next stream
   clearInterval(countdownInterval);
 
   if (TWITCH_STATE.live) {
@@ -107,11 +56,9 @@ function updateUI() {
     minute: "2-digit"
   })} ${TIMEZONE_LABEL}`;
 
-  // Countdown
   countdownInterval = setInterval(() => {
     const now = new Date();
     const diff = nextStream.startDate - now;
-
     if (diff <= 0) {
       clearInterval(countdownInterval);
       countdownEl.textContent = "Starting soon…";
@@ -127,12 +74,3 @@ function updateUI() {
       `Starts in ${days > 0 ? days + "d " : ""}${hours}h ${minutes}m ${seconds}s`;
   }, 1000);
 }
-
-/*************************************************
- * INIT
- *************************************************/
-
-document.addEventListener("DOMContentLoaded", () => {
-  loadTwitch();
-  setInterval(loadTwitch, 60000); // Refresh every 60s
-});
