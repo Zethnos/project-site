@@ -2,22 +2,9 @@
  * CONFIG
  *************************************************/
 
-const TWITCH_API_URL = "/api/twitch.php";
+const TWITCH_API_URL = "/api/twitch.php"; // Your PHP endpoint
 const TWITCH_CHANNEL_URL = "https://twitch.tv/zethnos";
-
-const STREAM_TIMEZONE = "America/New_York";
-const TIMEZONE_LABEL = "EST";
-
-/*************************************************
- * SCHEDULE (STATIC, YOUR CONTROL)
- * 0 = Sunday, 6 = Saturday
- *************************************************/
-
-const SCHEDULE = [
-  { day: 1, time: "8:00", durationHours: 4 }, // Monday
-  { day: 3, time: "8:00", durationHours: 4 }, // Wednesday
-  { day: 5, time: "8:00", durationHours: 4 }  // Friday
-];
+const TIMEZONE_LABEL = "EST"; // Optional, just for display
 
 /*************************************************
  * GLOBAL STATE
@@ -25,8 +12,8 @@ const SCHEDULE = [
 
 let TWITCH_STATE = {
   live: false,
-  followers: 0,
-  started_at: null
+  category: "",
+  schedule: [], // Will hold Twitch schedule entries
 };
 
 let countdownInterval = null;
@@ -40,25 +27,15 @@ async function loadTwitch() {
     const res = await fetch(TWITCH_API_URL);
     const data = await res.json();
 
-    TWITCH_STATE = data;
+    TWITCH_STATE = {
+      live: data.live || false,
+      category: data.category || "",
+      schedule: data.schedule || [],
+    };
 
-    updateTwitchUI();
-    updateScheduleUI();
+    updateUI();
   } catch (err) {
     console.error("Twitch API error:", err);
-  }
-}
-
-function updateTwitchUI() {
-  const followersEl = document.getElementById("followers");
-  const statusEl = document.getElementById("status");
-
-  if (followersEl && TWITCH_STATE.followers != null) {
-    followersEl.textContent = TWITCH_STATE.followers.toLocaleString();
-  }
-
-  if (statusEl) {
-    statusEl.textContent = TWITCH_STATE.live ? "LIVE 🔴" : "Offline";
   }
 }
 
@@ -66,108 +43,74 @@ function updateTwitchUI() {
  * SCHEDULE LOGIC
  *************************************************/
 
-function getNextStreamDate(now = new Date()) {
-  for (let i = 0; i < 7; i++) {
-    const check = new Date(now);
-    check.setDate(now.getDate() + i);
-
-    const daySchedule = SCHEDULE.find(
-      s => s.day === check.getDay()
-    );
-
-    if (!daySchedule) continue;
-
-    const [hour, minute] = daySchedule.time.split(":").map(Number);
-    const streamDate = new Date(check);
-    streamDate.setHours(hour, minute, 0, 0);
-
-    if (streamDate > now) {
-      return streamDate;
-    }
-  }
-  return null;
-}
-
-function updateScheduleUI() {
-  const listEl = document.getElementById("schedule-list");
-  const nextStreamEl = document.getElementById("next-stream-time");
-  const countdownEl = document.getElementById("countdown");
-
-  if (!listEl) return;
-
-  listEl.innerHTML = "";
-
+function getNextStream() {
   const now = new Date();
-  const today = now.getDay();
-  const isLive = TWITCH_STATE.live === true;
 
-  SCHEDULE.forEach(entry => {
-    const li = document.createElement("li");
-    li.className = "list-group-item";
-
-    const dayName = new Date(2024, 0, entry.day + 7)
-      .toLocaleDateString("en-US", { weekday: "long" });
-
-    const link = document.createElement("a");
-    link.href = TWITCH_CHANNEL_URL;
-    link.target = "_blank";
-
-    link.innerHTML = `
-      <span>${dayName}</span>
-      <span>${entry.time} ${TIMEZONE_LABEL}</span>
-    `;
-
-    if (entry.day === today && isLive) {
-      li.classList.add("live");
-
-      const badge = document.createElement("span");
-      badge.className = "badge";
-      badge.textContent = "LIVE";
-      link.appendChild(badge);
-    }
-
-    li.appendChild(link);
-    listEl.appendChild(li);
-  });
-
-  // NEXT STREAM / LIVE OVERRIDE
-  if (isLive) {
-    if (nextStreamEl) nextStreamEl.textContent = "Happening now 🔴";
-    if (countdownEl) countdownEl.textContent = "Live on Twitch";
-    clearInterval(countdownInterval);
-    return;
-  }
-
-  const nextStream = getNextStreamDate(now);
-
-  if (nextStream && nextStreamEl) {
-    nextStreamEl.textContent =
-      nextStream.toLocaleString("en-US", {
-        weekday: "long",
-        hour: "numeric",
-        minute: "2-digit"
-      }) + ` ${TIMEZONE_LABEL}`;
-
-    startCountdown(nextStream);
-  } else {
-    if (nextStreamEl) nextStreamEl.textContent = "No upcoming streams";
-    if (countdownEl) countdownEl.textContent = "";
-  }
+  // Find the next upcoming stream
+  return TWITCH_STATE.schedule
+    .map(entry => ({ ...entry, startDate: new Date(entry.start_time) }))
+    .filter(entry => entry.startDate > now)
+    .sort((a, b) => a.startDate - b.startDate)[0] || null;
 }
 
 /*************************************************
- * COUNTDOWN
+ * UI UPDATE
  *************************************************/
 
-function startCountdown(targetDate) {
+function updateUI() {
+  const nextStreamEl = document.getElementById("next-stream-time");
   const countdownEl = document.getElementById("countdown");
-  if (!countdownEl) return;
+  const scheduleEl = document.getElementById("schedule-list");
 
+  if (!nextStreamEl || !countdownEl || !scheduleEl) return;
+
+  // Clear schedule
+  scheduleEl.innerHTML = "";
+
+  // Populate schedule from Twitch
+  TWITCH_STATE.schedule.forEach(entry => {
+    const li = document.createElement("li");
+    li.className = "list-group-item";
+
+    const startDate = new Date(entry.start_time);
+    const dayName = startDate.toLocaleDateString("en-US", { weekday: "long" });
+    const timeStr = startDate.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
+
+    li.innerHTML = `<a href="${TWITCH_CHANNEL_URL}" target="_blank">
+      <span>${dayName}</span> - <span>${timeStr} ${TIMEZONE_LABEL}</span>
+    </a>`;
+
+    scheduleEl.appendChild(li);
+  });
+
+  // Live vs next stream
   clearInterval(countdownInterval);
 
+  if (TWITCH_STATE.live) {
+    nextStreamEl.textContent = "LIVE NOW 🔴";
+    countdownEl.textContent = TWITCH_STATE.category
+      ? `Streaming: ${TWITCH_STATE.category}`
+      : "Live on Twitch";
+    return;
+  }
+
+  const nextStream = getNextStream();
+  if (!nextStream) {
+    nextStreamEl.textContent = "No upcoming streams";
+    countdownEl.textContent = "";
+    return;
+  }
+
+  nextStreamEl.textContent = `Next Stream: ${nextStream.startDate.toLocaleString("en-US", {
+    weekday: "long",
+    hour: "numeric",
+    minute: "2-digit"
+  })} ${TIMEZONE_LABEL}`;
+
+  // Countdown
   countdownInterval = setInterval(() => {
     const now = new Date();
-    const diff = targetDate - now;
+    const diff = nextStream.startDate - now;
 
     if (diff <= 0) {
       clearInterval(countdownInterval);
@@ -175,11 +118,13 @@ function startCountdown(targetDate) {
       return;
     }
 
-    const hours = Math.floor(diff / 36e5);
-    const minutes = Math.floor((diff % 36e5) / 6e4);
+    const days = Math.floor(diff / 86400000);
+    const hours = Math.floor((diff % 86400000) / 3600000);
+    const minutes = Math.floor((diff % 3600000) / 60000);
+    const seconds = Math.floor((diff % 60000) / 1000);
 
     countdownEl.textContent =
-      `Starts in ${hours}h ${minutes}m`;
+      `Starts in ${days > 0 ? days + "d " : ""}${hours}h ${minutes}m ${seconds}s`;
   }, 1000);
 }
 
@@ -189,5 +134,5 @@ function startCountdown(targetDate) {
 
 document.addEventListener("DOMContentLoaded", () => {
   loadTwitch();
-  setInterval(loadTwitch, 60000);
+  setInterval(loadTwitch, 60000); // Refresh every 60s
 });
