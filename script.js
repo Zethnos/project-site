@@ -14,6 +14,8 @@ let TWITCH_STATE = {
   live: false,
   category: "",
   schedule: [], // Will hold Twitch schedule entries
+  followers: 0,
+  viewers: 0,
 };
 
 let countdownInterval = null;
@@ -31,6 +33,8 @@ async function loadTwitch() {
       live: data.live || false,
       category: data.category || "",
       schedule: data.schedule || [],
+      followers: data.followers || 0,
+      viewers: data.viewers || 0,
     };
 
     updateUI();
@@ -80,8 +84,18 @@ function updateUI() {
   const nextStreamEl = document.getElementById("next-stream-time");
   const countdownEl = document.getElementById("countdown");
   const scheduleEl = document.getElementById("schedule-list");
+  const followersEl = document.getElementById("followers");
+  const statusEl = document.getElementById("status");
 
-  if (!nextStreamEl || !countdownEl || !scheduleEl) return;
+  if (!nextStreamEl || !countdownEl || !scheduleEl || !followersEl || !statusEl) return;
+
+  // Update followers
+  followersEl.textContent = TWITCH_STATE.followers.toLocaleString();
+
+  // Update live status
+  statusEl.textContent = TWITCH_STATE.live
+    ? `LIVE NOW 🔴 (${TWITCH_STATE.viewers} viewers)`
+    : "Offline";
 
   // Clear schedule
   scheduleEl.innerHTML = "";
