@@ -9,96 +9,124 @@ $cacheFile = "../../php/apps/twitch_cache.json";
 
 // ---------- HELPERS ----------
 function fetchJson($url, $headers = [], $method = "GET", $postFields = null) {
-  $opts = [
-    "http" => [
-      "method" => $method,
-      "header" => $headers,
-    ]
-  ];
+    $opts = [
+        "http" => [
+            "method" => $method,
+            "header" => $headers,
+        ]
+    ];
 
-  if ($postFields) {
-    $opts["http"]["content"] = http_build_query($postFields);
-  }
+    if ($postFields) {
+        $opts["http"]["content"] = http_build_query($postFields);
+    }
 
-  return json_decode(
-    file_get_contents($url, false, stream_context_create($opts)),
-    true
-  );
+    return json_decode(
+        file_get_contents($url, false, stream_context_create($opts)),
+        true
+    );
 }
 
 // ---------- TOKEN ----------
 function getTwitchToken($tokenFile) {
-  if (file_exists($tokenFile)) {
-    $token = json_decode(file_get_contents($tokenFile), true);
-    if (!empty($token["access_token"]) && time() < $token["expires_at"]) {
-      return $token["access_token"];
+    if (file_exists($tokenFile)) {
+        $token = json_decode(file_get_contents($tokenFile), true);
+        if (!empty($token["access_token"]) && time() < $token["expires_at"]) {
+            return $token["access_token"];
+        }
     }
-  }
 
-  $data = fetchJson(
-    "https://id.twitch.tv/oauth2/token",
-    ["Content-Type: application/x-www-form-urlencoded"],
-    "POST",
-    [
-      "client_id" => TWITCH_CLIENT_ID,
-      "client_secret" => TWITCH_CLIENT_SECRET,
-      "grant_type" => "client_credentials"
-    ]
-  );
+    $data = fetchJson(
+        "https://id.twitch.tv/oauth2/token",
+        ["Content-Type: application/x-www-form-urlencoded"],
+        "POST",
+        [
+            "client_id" => TWITCH_CLIENT_ID,
+            "client_secret" => TWITCH_CLIENT_SECRET,
+            "grant_type" => "client_credentials"
+        ]
+    );
 
-  $data["expires_at"] = time() + $data["expires_in"];
-  file_put_contents($tokenFile, json_encode($data));
+    $data["expires_at"] = time() + $data["expires_in"];
+    file_put_contents($tokenFile, json_encode($data));
 
-  return $data["access_token"];
+    return $data["access_token"];
 }
 
 // ---------- CACHE ----------
 if (file_exists($cacheFile)) {
-  $cache = json_decode(file_get_contents($cacheFile), true);
-  if (!empty($cache["timestamp"]) &&
-      time() - $cache["timestamp"] < STATS_CACHE_TTL) {
-    echo json_encode($cache["data"]);
-    exit;
-  }
+    $cache = json_decode(file_get_contents($cacheFile), true);
+    if (!empty($cache["timestamp"]) &&
+        time() - $cache["timestamp"] < STATS_CACHE_TTL) {
+        echo json_encode($cache["data"]);
+        exit;
+    }
 }
 
 // ---------- API CALLS ----------
 $token = getTwitchToken($tokenFile);
 
 $headers = [
-  "Client-ID: " . TWITCH_CLIENT_ID,
-  "Authorization: Bearer $token"
+    "Client-ID: " . TWITCH_CLIENT_ID,
+    "Authorization: Bearer $token"
 ];
 
-// User ID
-$user = fetchJson(
-  "https://api.twitch.tv/helix/users?login=" . TWITCH_USERNAME,
-  $headers
-)["data"][0];
+// Get user info
+$userData = fetchJson(
+    "https://api.twitch.tv/helix/users?login=" . TWITCH_USERNAME,
+    $headers
+);
+
+$user = $userData["data"][0] ?? null;
+if (!$user) {
+    echo json_encode(["error" => "User not found"]);
+    exit;
+}
 
 // Followers
 $follows = fetchJson(
-  "https://api.twitch.tv/helix/channels/followers?broadcaster_id=" . $user["id"],
-  $headers
+    "https://api.twitch.tv/helix/channels/followers?broadcaster_id=" . $user["id"],
+    $headers
 );
 
 // Stream
 $stream = fetchJson(
-  "https://api.twitch.tv/helix/streams?user_id=" . $user["id"],
-  $headers
+    "https://api.twitch.tv/helix/streams?user_id=" . $user["id"],
+    $headers
 );
+
+$isLive = count($stream["data"]) > 0;
+$currentCategory = $stream["data"][0]["game_name"] ?? "";
+
+// Schedule
+$scheduleRaw = fetchJson(
+    "https://api.twitch.tv/helix/schedule?broadcaster_id=" . $user["id"],
+    $headers
+);
+
+$schedule = [];
+if (!empty($scheduleRaw["data"]["segments"])) {
+    foreach ($scheduleRaw["data"]["segments"] as $seg) {
+        $schedule[] = [
+            "title" => $seg["title"],
+            "start_time" => $seg["start_time"],
+            "category" => $seg["category"]["name"] ?? ""
+        ];
+    }
+}
 
 // Final data
 $data = [
-  "followers" => $follows["total"],
-  "live" => count($stream["data"]) > 0,
-  "viewers" => $stream["data"][0]["viewer_count"] ?? 0
+    "followers" => $follows["total"] ?? 0,
+    "live" => $isLive,
+    "viewers" => $stream["data"][0]["viewer_count"] ?? 0,
+    "category" => $currentCategory,
+    "schedule" => $schedule
 ];
 
 // Save cache
 file_put_contents($cacheFile, json_encode([
-  "timestamp" => time(),
-  "data" => $data
+    "timestamp" => time(),
+    "data" => $data
 ]));
 
 echo json_encode($data);
