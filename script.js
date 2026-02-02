@@ -13,7 +13,7 @@ const TIMEZONE_LABEL = "EST"; // Optional, just for display
 let TWITCH_STATE = {
   live: false,
   category: "",
-  schedule: [], // Twitch schedule entries
+  schedule: [], // Will hold Twitch schedule entries
   followers: 0,
   viewers: 0,
 };
@@ -32,7 +32,7 @@ async function loadTwitch() {
     TWITCH_STATE = {
       live: data.live || false,
       category: data.category || "",
-      schedule: Array.isArray(data.schedule) ? data.schedule : [],
+      schedule: data.schedule || [],
       followers: data.followers || 0,
       viewers: data.viewers || 0,
     };
@@ -50,7 +50,7 @@ async function loadTwitch() {
 // Get the start and end of the current week (Sunday–Saturday)
 function getCurrentWeekRange() {
   const now = new Date();
-  const dayOfWeek = now.getDay(); // 0 = Sunday, 1 = Monday...
+  const dayOfWeek = now.getDay(); // 0 = Sunday, 1 = Monday, ...
   const startOfWeek = new Date(now);
   startOfWeek.setDate(now.getDate() - dayOfWeek);
   startOfWeek.setHours(0, 0, 0, 0);
@@ -62,26 +62,13 @@ function getCurrentWeekRange() {
   return { startOfWeek, endOfWeek };
 }
 
-// Filter schedule to this week only (UTC-safe)
+// Filter schedule to this week only
 function getWeeklySchedule() {
   const { startOfWeek, endOfWeek } = getCurrentWeekRange();
-
-  if (!TWITCH_STATE.schedule || !Array.isArray(TWITCH_STATE.schedule)) return [];
-
-  const weekly = TWITCH_STATE.schedule
-    .map(entry => {
-      const startDate = new Date(entry.start_time);
-      return { ...entry, startDate };
-    })
-    .filter(entry => {
-      return entry.startDate.getTime() >= startOfWeek.getTime() &&
-             entry.startDate.getTime() <= endOfWeek.getTime();
-    })
+  return TWITCH_STATE.schedule
+    .map(entry => ({ ...entry, startDate: new Date(entry.start_time) }))
+    .filter(entry => entry.startDate >= startOfWeek && entry.startDate <= endOfWeek)
     .sort((a, b) => a.startDate - b.startDate);
-
-  // Debug log
-  console.log("Weekly schedule:", weekly);
-  return weekly;
 }
 
 function getNextStream() {
@@ -113,29 +100,22 @@ function updateUI() {
   // Clear schedule
   scheduleEl.innerHTML = "";
 
-  // Populate schedule from this week
+  // Populate schedule from this week only
   const weeklySchedule = getWeeklySchedule();
-  if (weeklySchedule.length === 0) {
+  weeklySchedule.forEach(entry => {
     const li = document.createElement("li");
     li.className = "list-group-item";
-    li.textContent = "No streams scheduled this week";
+
+    const startDate = entry.startDate;
+    const dayName = startDate.toLocaleDateString("en-US", { weekday: "long" });
+    const timeStr = startDate.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
+
+    li.innerHTML = `<a href="${TWITCH_CHANNEL_URL}" target="_blank">
+      <span>${dayName}</span> - <span>${timeStr} ${TIMEZONE_LABEL}</span>
+    </a>`;
+
     scheduleEl.appendChild(li);
-  } else {
-    weeklySchedule.forEach(entry => {
-      const li = document.createElement("li");
-      li.className = "list-group-item";
-
-      const startDate = entry.startDate;
-      const dayName = startDate.toLocaleDateString("en-US", { weekday: "long" });
-      const timeStr = startDate.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
-
-      li.innerHTML = `<a href="${TWITCH_CHANNEL_URL}" target="_blank">
-        <span>${dayName}</span> - <span>${timeStr} ${TIMEZONE_LABEL}</span>
-      </a>`;
-
-      scheduleEl.appendChild(li);
-    });
-  }
+  });
 
   // Live vs next stream
   clearInterval(countdownInterval);
