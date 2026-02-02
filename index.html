@@ -198,22 +198,6 @@
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
     ></script>
-    <script src="stream-schedule.js"></script>
-    <script>
-      async function loadTwitch() {
-        const res = await fetch("/api/twitch.php");
-        const data = await res.json();
-
-        document.getElementById("followers").textContent =
-          data.followers.toLocaleString();
-
-        document.getElementById("status").textContent = data.live
-          ? "LIVE 🔴"
-          : "Offline";
-      }
-
-      loadTwitch();
-      setInterval(loadTwitch, 60000);
-    </script>
+    <script src="script.js"></script>
   </body>
 </html>
