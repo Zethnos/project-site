@@ -43,14 +43,33 @@ async function loadTwitch() {
  * SCHEDULE LOGIC
  *************************************************/
 
-function getNextStream() {
+// Get the start and end of the current week (Sunday–Saturday)
+function getCurrentWeekRange() {
   const now = new Date();
+  const dayOfWeek = now.getDay(); // 0 = Sunday, 1 = Monday, ...
+  const startOfWeek = new Date(now);
+  startOfWeek.setDate(now.getDate() - dayOfWeek);
+  startOfWeek.setHours(0, 0, 0, 0);
 
-  // Find the next upcoming stream
+  const endOfWeek = new Date(startOfWeek);
+  endOfWeek.setDate(startOfWeek.getDate() + 6);
+  endOfWeek.setHours(23, 59, 59, 999);
+
+  return { startOfWeek, endOfWeek };
+}
+
+// Filter schedule to this week only
+function getWeeklySchedule() {
+  const { startOfWeek, endOfWeek } = getCurrentWeekRange();
   return TWITCH_STATE.schedule
     .map(entry => ({ ...entry, startDate: new Date(entry.start_time) }))
-    .filter(entry => entry.startDate > now)
-    .sort((a, b) => a.startDate - b.startDate)[0] || null;
+    .filter(entry => entry.startDate >= startOfWeek && entry.startDate <= endOfWeek)
+    .sort((a, b) => a.startDate - b.startDate);
+}
+
+function getNextStream() {
+  const now = new Date();
+  return getWeeklySchedule().find(entry => entry.startDate > now) || null;
 }
 
 /*************************************************
@@ -67,12 +86,13 @@ function updateUI() {
   // Clear schedule
   scheduleEl.innerHTML = "";
 
-  // Populate schedule from Twitch
-  TWITCH_STATE.schedule.forEach(entry => {
+  // Populate schedule from this week only
+  const weeklySchedule = getWeeklySchedule();
+  weeklySchedule.forEach(entry => {
     const li = document.createElement("li");
     li.className = "list-group-item";
 
-    const startDate = new Date(entry.start_time);
+    const startDate = entry.startDate;
     const dayName = startDate.toLocaleDateString("en-US", { weekday: "long" });
     const timeStr = startDate.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
 
@@ -96,7 +116,7 @@ function updateUI() {
 
   const nextStream = getNextStream();
   if (!nextStream) {
-    nextStreamEl.textContent = "No upcoming streams";
+    nextStreamEl.textContent = "No upcoming streams this week";
     countdownEl.textContent = "";
     return;
   }
