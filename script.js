@@ -32,7 +32,7 @@ async function loadTwitch() {
     TWITCH_STATE = {
       live: data.live || false,
       category: data.category || "",
-      schedule: data.schedule || [],
+      schedule: Array.isArray(data.schedule) ? data.schedule : [],
       followers: data.followers || 0,
       viewers: data.viewers || 0,
     };
@@ -47,10 +47,9 @@ async function loadTwitch() {
  * SCHEDULE LOGIC
  *************************************************/
 
-// Get the start and end of the current week (Sunday–Saturday)
 function getCurrentWeekRange() {
   const now = new Date();
-  const dayOfWeek = now.getDay(); // 0 = Sunday, 1 = Monday, ...
+  const dayOfWeek = now.getDay(); // 0 = Sunday, 1 = Monday...
   const startOfWeek = new Date(now);
   startOfWeek.setDate(now.getDate() - dayOfWeek);
   startOfWeek.setHours(0, 0, 0, 0);
@@ -62,12 +61,15 @@ function getCurrentWeekRange() {
   return { startOfWeek, endOfWeek };
 }
 
-// Filter schedule to this week only
 function getWeeklySchedule() {
   const { startOfWeek, endOfWeek } = getCurrentWeekRange();
+
+  if (!TWITCH_STATE.schedule || !Array.isArray(TWITCH_STATE.schedule)) return [];
+
   return TWITCH_STATE.schedule
     .map(entry => ({ ...entry, startDate: new Date(entry.start_time) }))
-    .filter(entry => entry.startDate >= startOfWeek && entry.startDate <= endOfWeek)
+    .filter(entry => entry.startDate.getTime() >= startOfWeek.getTime() &&
+                     entry.startDate.getTime() <= endOfWeek.getTime())
     .sort((a, b) => a.startDate - b.startDate);
 }
 
@@ -81,85 +83,92 @@ function getNextStream() {
  *************************************************/
 
 function updateUI() {
+  // Optional elements
   const nextStreamEl = document.getElementById("next-stream-time");
   const countdownEl = document.getElementById("countdown");
   const scheduleEl = document.getElementById("schedule-list");
   const followersEl = document.getElementById("followers");
   const statusEl = document.getElementById("status");
 
-  if (!nextStreamEl || !countdownEl || !scheduleEl || !followersEl || !statusEl) return;
+  // Update followers if element exists
+  if (followersEl) {
+    followersEl.textContent = TWITCH_STATE.followers.toLocaleString();
+  }
 
-  // Update followers
-  followersEl.textContent = TWITCH_STATE.followers.toLocaleString();
+  // Update live status if element exists
+  if (statusEl) {
+    statusEl.textContent = TWITCH_STATE.live
+      ? `LIVE NOW 🔴 (${TWITCH_STATE.viewers} viewers)`
+      : "Offline";
+  }
 
-  // Update live status
-  statusEl.textContent = TWITCH_STATE.live
-    ? `LIVE NOW 🔴 (${TWITCH_STATE.viewers} viewers)`
-    : "Offline";
+  // Update schedule if element exists
+  if (scheduleEl) {
+    scheduleEl.innerHTML = "";
 
-  // Clear schedule
-  scheduleEl.innerHTML = "";
+    const weeklySchedule = getWeeklySchedule();
+    if (weeklySchedule.length === 0) {
+      const li = document.createElement("li");
+      li.className = "list-group-item";
+      li.textContent = "No streams scheduled this week";
+      scheduleEl.appendChild(li);
+    } else {
+      weeklySchedule.forEach(entry => {
+        const li = document.createElement("li");
+        li.className = "list-group-item";
 
-  // Populate schedule from this week only
-  const weeklySchedule = getWeeklySchedule();
-  weeklySchedule.forEach(entry => {
-    const li = document.createElement("li");
-    li.className = "list-group-item";
+        const startDate = entry.startDate;
+        const dayName = startDate.toLocaleDateString("en-US", { weekday: "long" });
+        const timeStr = startDate.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
 
-    const startDate = entry.startDate;
-    const dayName = startDate.toLocaleDateString("en-US", { weekday: "long" });
-    const timeStr = startDate.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
+        li.innerHTML = `<a href="${TWITCH_CHANNEL_URL}" target="_blank">
+          <span>${dayName}</span> - <span>${timeStr} ${TIMEZONE_LABEL}</span>
+        </a>`;
 
-    li.innerHTML = `<a href="${TWITCH_CHANNEL_URL}" target="_blank">
-      <span>${dayName}</span> - <span>${timeStr} ${TIMEZONE_LABEL}</span>
-    </a>`;
+        scheduleEl.appendChild(li);
+      });
+    }
+  }
 
-    scheduleEl.appendChild(li);
-  });
-
-  // Live vs next stream
+  // Update next stream & countdown if elements exist
   clearInterval(countdownInterval);
 
-  if (TWITCH_STATE.live) {
-    nextStreamEl.textContent = "LIVE NOW 🔴";
-    countdownEl.textContent = TWITCH_STATE.category
-      ? `Streaming: ${TWITCH_STATE.category}`
-      : "Live on Twitch";
-    return;
-  }
-
   const nextStream = getNextStream();
-  if (!nextStream) {
-    nextStreamEl.textContent = "No upcoming streams this week";
-    countdownEl.textContent = "";
-    return;
+
+  if (nextStreamEl) {
+    if (TWITCH_STATE.live) {
+      nextStreamEl.textContent = "LIVE NOW 🔴";
+    } else if (!nextStream) {
+      nextStreamEl.textContent = "No upcoming streams this week";
+    } else {
+      nextStreamEl.textContent = `${nextStream.startDate.toLocaleString("en-US", {
+        weekday: "long",
+        hour: "numeric",
+        minute: "2-digit"
+      })} ${TIMEZONE_LABEL}`;
+    }
   }
 
-  nextStreamEl.textContent = `${nextStream.startDate.toLocaleString("en-US", {
-    weekday: "long",
-    hour: "numeric",
-    minute: "2-digit"
-  })} ${TIMEZONE_LABEL}`;
+  if (countdownEl && nextStream && !TWITCH_STATE.live) {
+    countdownInterval = setInterval(() => {
+      const now = new Date();
+      const diff = nextStream.startDate - now;
 
-  // Countdown
-  countdownInterval = setInterval(() => {
-    const now = new Date();
-    const diff = nextStream.startDate - now;
+      if (diff <= 0) {
+        clearInterval(countdownInterval);
+        countdownEl.textContent = "Starting soon…";
+        return;
+      }
 
-    if (diff <= 0) {
-      clearInterval(countdownInterval);
-      countdownEl.textContent = "Starting soon…";
-      return;
-    }
+      const days = Math.floor(diff / 86400000);
+      const hours = Math.floor((diff % 86400000) / 3600000);
+      const minutes = Math.floor((diff % 3600000) / 60000);
+      const seconds = Math.floor((diff % 60000) / 1000);
 
-    const days = Math.floor(diff / 86400000);
-    const hours = Math.floor((diff % 86400000) / 3600000);
-    const minutes = Math.floor((diff % 3600000) / 60000);
-    const seconds = Math.floor((diff % 60000) / 1000);
-
-    countdownEl.textContent =
-      `Starts in ${days > 0 ? days + "d " : ""}${hours}h ${minutes}m ${seconds}s`;
-  }, 1000);
+      countdownEl.textContent =
+        `Starts in ${days > 0 ? days + "d " : ""}${hours}h ${minutes}m ${seconds}s`;
+    }, 1000);
+  }
 }
 
 /*************************************************
