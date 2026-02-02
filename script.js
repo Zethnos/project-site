@@ -121,7 +121,7 @@ function updateUI() {
     return;
   }
 
-  nextStreamEl.textContent = `Next Stream: ${nextStream.startDate.toLocaleString("en-US", {
+  nextStreamEl.textContent = `${nextStream.startDate.toLocaleString("en-US", {
     weekday: "long",
     hour: "numeric",
     minute: "2-digit"
