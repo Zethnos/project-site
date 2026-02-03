@@ -61,7 +61,7 @@ async function loadTwitchStats() {
 
     setText(
       "avg-stream-length",
-      formatNumber(data.streaming_time?.avg_stream_length_hours, 2)
+      formatNumber(data.streaming_time?.avg_stream_length_hours, 2) + "h"
     );
 
     /* ---------------- GROWTH CURVE (FOR CHARTS) ---------------- */

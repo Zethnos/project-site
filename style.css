@@ -398,18 +398,37 @@ nav {
   margin: 3rem auto;
   text-align: center;
   max-width: fit-content;
+  margin-bottom: 20px;
 }
 
 #twitch_stats h3 {
   font-size: 20px;
+  margin-bottom: 0;
+}
+
+#twitch_stats h4 {
+  font-size: 20px;
+  font-style: italic;
+  margin-bottom: 30px;
+  text-align: center;
 }
 
 #twitch_stats .minor-card {
-  font-size: 20px;
+  font-family: "Bungee", cursive;
+  font-size: 40px;
+  color: #ff6200;
   background-color: #222;
   border-radius: 50px;
   width: fit-content;
-  padding: 1rem;
+  padding: 30px 30px 15px 30px;
+  min-height: 10px;
+}
+
+#twitch_stats .minor-card .stat {
+  max-height: fit-content;
+}
+#twitch_stats .minor-card .value {
+  height: 10px!important;
 }
 
 /* Mobile tweaks */
