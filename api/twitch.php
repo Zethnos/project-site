@@ -1,11 +1,11 @@
 <?php
-require_once "../../php/apps/twitch_config.php";
+require_once "/home/layngijq/php/apps/twitch_config.php";
 
 header("Content-Type: application/json");
 
 // ------------------- FILE PATHS -------------------
-$tokenFile = "../../php/apps/twitch_token.json";
-$cacheFile = "../../php/apps/twitch_cache.json";
+$tokenFile = "/home/layngijq/php/apps/twitch_token.json";
+$cacheFile = "/home/layngijq/php/apps/twitch_cache.json";
 
 // ------------------- ENV DETECTION -------------------
 // If run from cron / CLI, php_sapi_name() === 'cli'
