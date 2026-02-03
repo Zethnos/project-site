@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -53,20 +53,6 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="style.css" />
-    <style>
-      /* Stream schedule specific overrides */
-      #schedule-list a {
-        color: #fff;
-        text-decoration: none;
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-      }
-      #schedule-list li.live a {
-        color: #00ff00;
-        font-weight: 600;
-      }
-    </style>
   </head>
   <body>
     <nav class="navbar navbar-expand-lg">
@@ -116,21 +102,17 @@
           <div class="card h-100" id="stream-schedule">
             <div class="card-body text-center-all">
               <h2>Schedule</h2>
-              <h5>Co-Working</h5>
 
               <!-- Next Stream -->
-              <div id="next-stream">
-                <h6>Next stream</h6>
-                <div id="next-stream-time"></div>
+              <div id="next-stream" class="mb-2">
+                <h6 id="next-stream-label">Next Stream</h6>
+                <div id="next-stream-time" class="fw-semibold"></div>
               </div>
 
-              <!-- Countdown -->
-              <div
-                id="countdown"
-                class="text-center fw-semibold mb-3"
-              ></div>
+              <!-- Countdown / Live Info -->
+              <div id="countdown" class="text-center fw-semibold mb-3"></div>
 
-              <!-- Schedule list -->
+              <!-- Full Schedule List -->
               <ul id="schedule-list" class="list-group list-group-flush"></ul>
             </div>
           </div>
@@ -183,10 +165,13 @@
               <ul class="list-group list-group-flush">
                 <li class="list-group-item bg-transparent text-white">
                   <p>
-          Occasionally, I collaborate with sponsors or participate in charity
-          events. For inquiries or partnerships, please reach out at:<br />
-          <a href="mailto:business@zethnos.com">business@zethnos.com</a>
-        </p>
+                    Occasionally, I collaborate with sponsors or participate in
+                    charity events. For inquiries or partnerships, please reach
+                    out at:<br />
+                    <a href="mailto:business@zethnos.com"
+                      >business@zethnos.com</a
+                    >
+                  </p>
                 </li>
               </ul>
             </div>

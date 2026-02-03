@@ -122,7 +122,7 @@ function updateUI() {
         const timeStr = startDate.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
 
         li.innerHTML = `<a href="${TWITCH_CHANNEL_URL}" target="_blank">
-          <span>${dayName}</span> - <span>${timeStr} ${TIMEZONE_LABEL}</span>
+          <span>${dayName}</span>  <span>${timeStr} ${TIMEZONE_LABEL}</span>
         </a>`;
 
         scheduleEl.appendChild(li);
