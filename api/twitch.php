@@ -127,7 +127,7 @@ try {
     ]);
 
     $stmt = $pdo->prepare("
-        INSERT INTO twitch_viewer_log
+        INSERT INTO stream_stats
         (stream_id, start_time, snapshot_time, viewers, title, category)
         VALUES (?, ?, ?, ?, ?, ?)
     ");
