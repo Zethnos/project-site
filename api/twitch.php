@@ -127,7 +127,7 @@ try {
     ]);
 
     $stmt = $pdo->prepare("
-        INSERT INTO stream_stats
+        INSERT INTO layngijq_streamstats
         (stream_id, start_time, snapshot_time, viewers, title, category)
         VALUES (?, ?, ?, ?, ?, ?)
     ");
