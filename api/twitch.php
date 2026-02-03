@@ -120,6 +120,9 @@ if (!empty($scheduleRaw["data"]["segments"])) {
 }
 
 // ------------------- DATABASE INSERT (cron + browser) -------------------
+
+if ($isLive) {
+    // DB insert
 try {
     $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4";
     $pdo = new PDO($dsn, DB_USER, DB_PASS, [
@@ -160,6 +163,7 @@ if (!$isCron) {
         "timestamp" => time(),
         "data" => $data
     ]));
+}
 }
 
 echo json_encode($data);
