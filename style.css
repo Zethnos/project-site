@@ -408,6 +408,20 @@ nav {
   }
 }
 
+.sponsors .logo-card {
+  padding: 0px 50px 50px 50px;
+  max-height: fit-content;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.sponsors img {
+  min-width: 375px;
+  max-width: 100%;
+  align-self: center;
+  margin-top: 0px;
+}
+
 .minor-card h2, .container h2, h1:not(.zethnos-title){
   align-self: center;
   margin-left: auto;
@@ -418,11 +432,21 @@ nav {
   margin-bottom: 20px;
 }
 
+
 #twitch_stats h2, .sponsors h1  {
   margin: 3rem auto;
   text-align: center;
   max-width: fit-content;
   margin-bottom: 20px;;
+}
+
+#sponsor {
+  margin-top: 50px;
+  margin-bottom: 30px;
+}
+
+.doomsday {
+  padding: 20px;
 }
 
 #twitch_stats h3 {
