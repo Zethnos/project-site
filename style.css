@@ -292,6 +292,11 @@ nav {
   color: #ccc;
 }
 
+.chart-wrapper {
+  max-width: 900px;
+  margin: 2rem auto;
+}
+
 /* =========================
    STREAM SCHEDULE CARD
    ========================= */
