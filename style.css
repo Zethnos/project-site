@@ -394,16 +394,22 @@ nav {
   }
 }
 
-#twitch_stats h3{
+#twitch_stats h2 {
+  margin: 3rem auto;
+  text-align: center;
+  max-width: fit-content;
+}
+
+#twitch_stats h3 {
   font-size: 20px;
 }
 
 #twitch_stats .minor-card {
   font-size: 20px;
   background-color: #222;
-  border-radius: 50rem;
-  margin-left: 5px;
-  margin-right: 5px;
+  border-radius: 50px;
+  width: fit-content;
+  padding: 1rem;
 }
 
 /* Mobile tweaks */
