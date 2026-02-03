@@ -147,7 +147,7 @@ try {
 } catch (Exception $e) {
     error_log("DB Insert Error: " . $e->getMessage());
 }
-
+}
 // ------------------- FINAL JSON -------------------
 $data = [
     "followers" => $follows["total"] ?? 0,
@@ -163,7 +163,6 @@ if (!$isCron) {
         "timestamp" => time(),
         "data" => $data
     ]));
-}
 }
 
 echo json_encode($data);
