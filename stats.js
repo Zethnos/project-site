@@ -48,28 +48,8 @@ async function loadTwitchStats() {
     );
 
     setText(
-      "avg-viewers-alltime",
-      formatNumber(data.viewer_stats?.average_viewers_all_time, 1)
-    );
-
-    setText(
-      "median-viewers-alltime",
-      formatNumber(data.viewer_stats?.median_viewers_all_time, 1)
-    );
-
-    setText(
       "peak-viewers-30d",
       formatNumber(data.viewer_stats?.peak_viewers_30d)
-    );
-
-    setText(
-      "peak-viewers-90d",
-      formatNumber(data.viewer_stats?.peak_viewers_90d)
-    );
-
-    setText(
-      "peak-viewers-year",
-      formatNumber(data.viewer_stats?.peak_viewers_365d)
     );
 
     /* ---------------- STREAMING TIME ---------------- */
@@ -80,57 +60,9 @@ async function loadTwitchStats() {
     );
 
     setText(
-      "hours-streamed-90d",
-      formatNumber(data.streaming_time?.hours_streamed_90d, 1)
-    );
-
-    setText(
       "avg-stream-length",
       formatNumber(data.streaming_time?.avg_stream_length_hours, 2)
     );
-
-    /* ---------------- ENGAGEMENT ---------------- */
-
-    setText(
-      "viewer-retention",
-      data.engagement?.avg_retention_percent !== null
-        ? `${formatNumber(data.engagement.avg_retention_percent, 1)}%`
-        : null
-    );
-
-    setText(
-      "engagement-score",
-      formatNumber(data.engagement?.engagement_score, 1)
-    );
-
-    /* ---------------- CONTENT ---------------- */
-
-    setText(
-      "top-category-30d",
-      data.content?.top_category_30d
-    );
-
-    setText(
-      "last-stream-title",
-      data.content?.last_stream?.title
-    );
-
-    setText(
-      "last-stream-category",
-      data.content?.last_stream?.category
-    );
-
-    if (data.content?.last_stream?.start_time) {
-      const date = new Date(data.content.last_stream.start_time);
-      setText(
-        "last-stream-date",
-        date.toLocaleDateString(undefined, {
-          year: "numeric",
-          month: "short",
-          day: "numeric"
-        })
-      );
-    }
 
     /* ---------------- GROWTH CURVE (FOR CHARTS) ---------------- */
 
