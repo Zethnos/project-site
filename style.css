@@ -7,6 +7,7 @@ h3 {
   position: relative;
   transition: color 0.3s ease;
   margin-bottom: 20px;
+  width: fit-content;
 }
 
 h5,
@@ -407,11 +408,21 @@ nav {
   }
 }
 
+.minor-card h2, .container h2, h1:not(.zethnos-title) {
+  align-self: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.business h2 {
+  margin-bottom: 20px;
+}
+
 #twitch_stats h2 {
   margin: 3rem auto;
   text-align: center;
   max-width: fit-content;
-  margin-bottom: 20px;
+  margin-bottom: 20px;;
 }
 
 #twitch_stats h3 {

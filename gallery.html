@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -101,7 +101,13 @@
       <span id="lightbox-next">→</span>
       <img id="lightbox-img" src="" alt="Lightbox Image" />
     </div>
-
+    <div class="row">
+      <div class="col-12 col-md-6 mx-auto mb-4">
+        <footer class="text-center-all py-3">
+          <p>© 2025 Zethnos. All rights reserved.</p>
+        </footer>
+      </div>
+    </div>
     <!-- Bootstrap JS and Popper.js -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
@@ -246,7 +252,7 @@
 
         lightboxPrev.addEventListener("click", () => {
           showImage(
-            (currentIndex - 1 + shuffledImages.length) % shuffledImages.length
+            (currentIndex - 1 + shuffledImages.length) % shuffledImages.length,
           );
         });
 
@@ -270,7 +276,7 @@
             if (e.key === "ArrowLeft") {
               showImage(
                 (currentIndex - 1 + shuffledImages.length) %
-                  shuffledImages.length
+                  shuffledImages.length,
               );
             } else if (e.key === "ArrowRight") {
               showImage((currentIndex + 1) % shuffledImages.length);
