@@ -48,21 +48,18 @@ function fetchAll(PDO $pdo, string $sql) {
     }
 }
 
-function totalHours(PDO $pdo, string $since) {
-    try {
-        $stmt = $pdo->query("
-            SELECT SUM(TIMESTAMPDIFF(SECOND, MIN(snapshot_time), MAX(snapshot_time))) / 3600
-            FROM layngijq_streamstats
-            WHERE snapshot_time >= '$since'
-            GROUP BY stream_id
-        ");
-        $hours = 0;
-        foreach ($stmt as $row) {
-            $hours += $row[0];
-        }
-        return round($hours, 1);
-    } catch (Throwable $e) {
-        return null;
+// ------------------- PHP MEDIAN FUNCTION -------------------
+function median(array $numbers): ?float {
+    $count = count($numbers);
+    if ($count === 0) return null;
+
+    sort($numbers, SORT_NUMERIC);
+    $middle = floor($count / 2);
+
+    if ($count % 2) {
+        return (float) $numbers[$middle];
+    } else {
+        return (float) (($numbers[$middle - 1] + $numbers[$middle]) / 2);
     }
 }
 
@@ -83,32 +80,38 @@ $peak30  = fetchValue($pdo, "SELECT MAX(viewers) FROM layngijq_streamstats WHERE
 $peak90  = fetchValue($pdo, "SELECT MAX(viewers) FROM layngijq_streamstats WHERE snapshot_time >= '$days90'");
 $peak365 = fetchValue($pdo, "SELECT MAX(viewers) FROM layngijq_streamstats WHERE snapshot_time >= '$days365'");
 
-// ------------------- MEDIAN VIEWERS -------------------
-// Fixed median query: ensures numeric sort and returns null only if no rows
-$median30 = fetchValue($pdo, "
-    SELECT AVG(mid_values) FROM (
-        SELECT viewers AS mid_values
-        FROM layngijq_streamstats
-        WHERE snapshot_time >= '$days30'
-        ORDER BY viewers+0
-        LIMIT 2 - (SELECT COUNT(*) FROM layngijq_streamstats WHERE snapshot_time >= '$days30') % 2
-        OFFSET (SELECT FLOOR((COUNT(*) - 1) / 2) FROM layngijq_streamstats WHERE snapshot_time >= '$days30')
-    ) t
-");
+// ------------------- MEDIAN VIEWERS (PHP) -------------------
+// 30-day median
+$viewers30 = fetchAll($pdo, "SELECT viewers FROM layngijq_streamstats WHERE snapshot_time >= '$days30'");
+$viewers30 = array_column($viewers30, 'viewers');
+$median30 = median($viewers30);
 
-$medianAll = fetchValue($pdo, "
-    SELECT AVG(mid_values) FROM (
-        SELECT viewers AS mid_values
-        FROM layngijq_streamstats
-        ORDER BY viewers+0
-        LIMIT 2 - (SELECT COUNT(*) FROM layngijq_streamstats) % 2
-        OFFSET (SELECT FLOOR((COUNT(*) - 1) / 2) FROM layngijq_streamstats)
-    ) t
-");
+// All-time median
+$viewersAll = fetchAll($pdo, "SELECT viewers FROM layngijq_streamstats");
+$viewersAll = array_column($viewersAll, 'viewers');
+$medianAll = median($viewersAll);
 
-// ------------------- STREAM TIME -------------------
-$hours30 = totalHours($pdo, $days30);
-$hours90 = totalHours($pdo, $days90);
+// ------------------- STREAM TIME (PHP) -------------------
+function totalHoursPHP(PDO $pdo, string $since): ?float {
+    $streams = fetchAll($pdo, "
+        SELECT stream_id, MIN(snapshot_time) AS start_time, MAX(snapshot_time) AS end_time
+        FROM layngijq_streamstats
+        WHERE snapshot_time >= '$since'
+        GROUP BY stream_id
+    ");
+    if (!$streams) return null;
+
+    $hours = 0;
+    foreach ($streams as $s) {
+        $start = strtotime($s['start_time']);
+        $end = strtotime($s['end_time']);
+        $hours += max(0, ($end - $start) / 3600);
+    }
+    return round($hours, 1);
+}
+
+$hours30 = totalHoursPHP($pdo, $days30);
+$hours90 = totalHoursPHP($pdo, $days90);
 
 // Average stream length
 $avgStreamLength = fetchValue($pdo, "
@@ -170,8 +173,8 @@ $data = [
     "viewer_stats" => [
         "average_viewers_30d" => $avg30 !== null ? (float) $avg30 : null,
         "average_viewers_all_time" => $avgAll !== null ? (float) $avgAll : null,
-        "median_viewers_30d" => $median30 !== null ? (float) $median30 : null,
-        "median_viewers_all_time" => $medianAll !== null ? (float) $medianAll : null,
+        "median_viewers_30d" => $median30,
+        "median_viewers_all_time" => $medianAll,
         "peak_viewers_30d" => $peak30 !== null ? (int) $peak30 : null,
         "peak_viewers_90d" => $peak90 !== null ? (int) $peak90 : null,
         "peak_viewers_365d" => $peak365 !== null ? (int) $peak365 : null
