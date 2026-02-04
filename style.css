@@ -115,7 +115,8 @@ nav {
   min-height: 150px;
 }
 
-.business a, #schedule-list a {
+.business a,
+#schedule-list a {
   color: #ff6200;
 }
 .business a:hover {
@@ -384,17 +385,17 @@ nav {
 }
 
 /* Stream schedule specific overrides */
-      #schedule-list a {
-        color: #fff;
-        text-decoration: none;
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-      }
-      #schedule-list li.live a {
-        color: #00ff00;
-        font-weight: 600;
-      }
+#schedule-list a {
+  color: #fff;
+  text-decoration: none;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+#schedule-list li.live a {
+  color: #00ff00;
+  font-weight: 600;
+}
 /* Pulse animation */
 @keyframes pulse {
   0% {
@@ -421,7 +422,9 @@ nav {
   margin-top: 0px;
 }
 
-.minor-card h2, .container h2, h1:not(.zethnos-title){
+.minor-card h2,
+.container h2,
+h1:not(.zethnos-title) {
   align-self: center;
   margin-left: auto;
   margin-right: auto;
@@ -431,12 +434,12 @@ nav {
   margin-bottom: 20px;
 }
 
-
-#twitch_stats h2, .sponsors h1  {
+#twitch_stats h2,
+.sponsors h1 {
   margin: 3rem auto;
   text-align: center;
   max-width: fit-content;
-  margin-bottom: 20px;;
+  margin-bottom: 20px;
 }
 
 #sponsor {
