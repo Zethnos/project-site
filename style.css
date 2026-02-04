@@ -416,8 +416,7 @@ nav {
 }
 
 .sponsors img {
-  min-width: 375px;
-  max-width: 100%;
+  min-width: 100%;
   align-self: center;
   margin-top: 0px;
 }
@@ -470,13 +469,12 @@ nav {
   width: fit-content;
   padding: 30px 30px 15px 30px;
   min-height: 10px;
+  margin-left: 15px;
+  margin-right: 15px;
 }
 
 #twitch_stats .minor-card .stat {
   max-height: fit-content;
-}
-#twitch_stats .minor-card .value {
-  height: 10px!important;
 }
 
 /* Mobile tweaks */
