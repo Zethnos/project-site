@@ -1,0 +1,25 @@
+# Config files with secrets
+*.config.php
+twitch_config.php
+twitch_token.json
+twitch_cache.json
+
+# PHP
+*.log
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Node
+node_modules/
+npm-debug.log*
+
+# IDE
+.idea/
+.vscode/
+*.sublime-*
+
+# Environment
+.env
+.env.local
