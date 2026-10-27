@@ -18,11 +18,11 @@
     />
     <meta
       property="og:image"
-      content="https://www.zethnos.com/images/gallery-og-image.jpg"
+      content="https://zethnos.com/img/gallery-og-image.jpg"
     />
-    <meta property="og:url" content="https://www.zethnos.com/gallery.html" />
+    <meta property="og:url" content="https://zethnos.com/gallery.html" />
     <meta name="twitter:card" content="summary_large_image" />
-    <link rel="canonical" href="https://www.zethnos.com/gallery.html" />
+    <link rel="canonical" href="https://zethnos.com/gallery.html" />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -30,15 +30,16 @@
         "creator": {
           "@type": "Person",
           "name": "Zethnos",
-          "url": "https://www.zethnos.com"
+          "url": "https://zethnos.com"
         },
         "name": "Zethnos Art Gallery",
         "description": "A collection of custom digital artwork by Zethnos, including character designs and creative projects."
       }
     </script>
     <link rel="icon" type="image/x-icon" href="img/favicon/favicon.ico" />
+    <link rel="manifest" href="img/favicon/site.webmanifest" />
     <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
     <link
@@ -96,9 +97,9 @@
 
     <!-- Lightbox -->
     <div id="lightbox">
-      <span id="lightbox-close">×</span>
-      <span id="lightbox-prev">←</span>
-      <span id="lightbox-next">→</span>
+      <button id="lightbox-close" aria-label="Close lightbox">×</button>
+      <button id="lightbox-prev" aria-label="Previous image">←</button>
+      <button id="lightbox-next" aria-label="Next image">→</button>
       <img id="lightbox-img" src="" alt="Lightbox Image" />
     </div>
     <div class="row">
@@ -120,47 +121,47 @@
 
         // Array of full-size image URLs (replace with your own)
         const fullSizeImages = [
-          { src: "img/gallery/alfclaw-burger-food-emotes.jpg", alt: "Image 1" },
-          { src: "img/gallery/bigfoot-full.jpg", alt: "Image 2" },
-          { src: "img/gallery/business-cards.jpg", alt: "Image 3" },
-          { src: "img/gallery/cellmaster-logo.jpg", alt: "Image 4" },
-          { src: "img/gallery/chinese-dragon.jpg", alt: "Image 5" },
-          { src: "img/gallery/dauraane-dragon-logos.jpg", alt: "Image 6" },
+          { src: "img/gallery/alfclaw-burger-food-emotes.jpg",  },
+          { src: "img/gallery/bigfoot-full.jpg",  },
+          { src: "img/gallery/business-cards.jpg",  },
+          { src: "img/gallery/cellmaster-logo.jpg",  },
+          { src: "img/gallery/chinese-dragon.jpg",  },
+          { src: "img/gallery/dauraane-dragon-logos.jpg",  },
           {
             src: "img/gallery/dlive-lemon-yellow-stream-graphics.jpg",
-            alt: "Image 7",
+            ,
           },
-          { src: "img/gallery/dracux-frog-emotes.jpg", alt: "Image 8" },
-          { src: "img/gallery/falling-candy.jpg", alt: "Image 9" },
-          { src: "img/gallery/fantasy-weapon.jpg", alt: "Image 10" },
-          { src: "img/gallery/ggr-logo.jpg", alt: "Image 11" },
-          { src: "img/gallery/gtav-emergency-logos.jpg", alt: "Image 12" },
-          { src: "img/gallery/heart-illustration.jpg", alt: "Image 13" },
-          { src: "img/gallery/kooky-background.jpg", alt: "Image 14" },
-          { src: "img/gallery/kraken-wall-art.jpg", alt: "Image 15" },
-          { src: "img/gallery/no-tread-logo.jpg", alt: "Image 16" },
-          { src: "img/gallery/plum-blossom-canvas.jpg", alt: "Image 17" },
-          { src: "img/gallery/ropey-zombie-logo.jpg", alt: "Image 18" },
-          { src: "img/gallery/sealife-magazine.jpg", alt: "Image 19" },
-          { src: "img/gallery/snow-character.jpg", alt: "Image 20" },
-          { src: "img/gallery/space-shirt.jpg", alt: "Image 21" },
-          { src: "img/gallery/tech-van.jpg", alt: "Image 22" },
-          { src: "img/gallery/temple-shirt.jpg", alt: "Image 23" },
-          { src: "img/gallery/thorlar-300.jpg", alt: "Image 24" },
-          { src: "img/gallery/tiger-crane-shirt.jpg", alt: "Image 25" },
-          { src: "img/gallery/tilted-squid-jersey.jpg", alt: "Image 26" },
-          { src: "img/gallery/tm-logo.jpg", alt: "Image 27" },
-          { src: "img/gallery/twitter-banners.jpg", alt: "Image 28" },
-          { src: "img/gallery/vibe-clothing.jpg", alt: "Image 29" },
-          { src: "img/gallery/warriors-wall-art.jpg", alt: "Image 30" },
-          { src: "img/gallery/wolf-head-logo.jpg", alt: "Image 31" },
+          { src: "img/gallery/dracux-frog-emotes.jpg",  },
+          { src: "img/gallery/falling-candy.jpg",  },
+          { src: "img/gallery/fantasy-weapon.jpg",  },
+          { src: "img/gallery/ggr-logo.jpg",  },
+          { src: "img/gallery/gtav-emergency-logos.jpg",  },
+          { src: "img/gallery/heart-illustration.jpg",  },
+          { src: "img/gallery/kooky-background.jpg",  },
+          { src: "img/gallery/kraken-wall-art.jpg",  },
+          { src: "img/gallery/no-tread-logo.jpg",  },
+          { src: "img/gallery/plum-blossom-canvas.jpg",  },
+          { src: "img/gallery/ropey-zombie-logo.jpg",  },
+          { src: "img/gallery/sealife-magazine.jpg",  },
+          { src: "img/gallery/snow-character.jpg",  },
+          { src: "img/gallery/space-shirt.jpg",  },
+          { src: "img/gallery/tech-van.jpg",  },
+          { src: "img/gallery/temple-shirt.jpg",  },
+          { src: "img/gallery/thorlar-300.jpg",  },
+          { src: "img/gallery/tiger-crane-shirt.jpg",  },
+          { src: "img/gallery/tilted-squid-jersey.jpg",  },
+          { src: "img/gallery/tm-logo.jpg",  },
+          { src: "img/gallery/twitter-banners.jpg",  },
+          { src: "img/gallery/vibe-clothing.jpg",  },
+          { src: "img/gallery/warriors-wall-art.jpg",  },
+          { src: "img/gallery/wolf-head-logo.jpg",  },
           {
             src: "img/gallery/zethnos-chinese-pirate-stream-graphics-package.jpg",
-            alt: "Image 32",
+            ,
           },
-          { src: "img/gallery/zethnos-emotes.jpg", alt: "Image 33" },
-          { src: "img/gallery/zethnos-OBS-full-scenes.jpg", alt: "Image 34" },
-          { src: "img/gallery/zombie-head-logo.jpg", alt: "Image 35" },
+          { src: "img/gallery/zethnos-emotes.jpg",  },
+          { src: "img/gallery/zethnos-OBS-full-scenes.jpg",  },
+          { src: "img/gallery/zombie-head-logo.jpg",  },
         ];
 
         // Shuffle images array (Fisher-Yates shuffle)
