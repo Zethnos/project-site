@@ -561,3 +561,14 @@ h1:not(.zethnos-title) {
       .faq summary { cursor: pointer; color: #fff; font-weight: 600; }
       .faq p { color: #cfcfcf; font-size: 0.9rem; margin-top: 0.75rem; margin-bottom: 0; }
       @media (max-width: 768px) { .svc-hero { padding: 2rem 1rem 1.5rem; } .svc-section { padding: 2rem 1rem; } }
+
+/* === services details (UX refinement) === */
+.svc-details { background: #161616; border: 1px solid #2a2a2a; border-radius: 10px; margin-bottom: 1rem; }
+.svc-details summary { cursor: pointer; padding: 1rem 1.25rem; color: #fff; font-weight: 600; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+.svc-details summary::-webkit-details-marker { display: none; }
+.svc-details summary::after { content: "▾"; color: #00ff00; margin-left: 0.5rem; }
+.svc-details[open] summary::after { content: "▴"; }
+.svc-summary-title { color: #fff; }
+.svc-summary-price { color: #00ff00; font-family: "Bungee", cursive; }
+.svc-details-body { padding: 0 1.25rem 1.25rem; color: #cfcfcf; }
+.svc-details-body ul { padding-left: 1.1rem; line-height: 1.6; }
