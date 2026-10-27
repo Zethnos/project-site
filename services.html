@@ -44,6 +44,7 @@
 
     <section class="svc-section" id="categories">
       <h2>Service Categories</h2>
+      <p class="svc-cat-instruction">Select a category to explore available services and pricing.</p>
       <div class="row g-4" id="category-grid">
         <div class="col-md-6 col-lg-3">
           <div class="cat-card" data-category="stream">
@@ -54,7 +55,7 @@
               <div class="cat-offer">OBS – $50</div>
               <div class="cat-offer">Audio – $85</div>
             </div>
-            <button class="cat-explore" type="button" data-target="stream" aria-expanded="false">Explore →</button>
+            <button class="cat-explore" type="button" data-target="stream" aria-expanded="false" aria-controls="service-panel">Explore →</button>
           </div>
         </div>
         <div class="col-md-6 col-lg-3">
@@ -65,7 +66,7 @@
             <div class="cat-offers">
               <div class="cat-offer">Streamer.bot – $100</div>
             </div>
-            <button class="cat-explore" type="button" data-target="automation" aria-expanded="false">Explore →</button>
+            <button class="cat-explore" type="button" data-target="automation" aria-expanded="false" aria-controls="service-panel">Explore →</button>
           </div>
         </div>
         <div class="col-md-6 col-lg-3">
@@ -78,7 +79,7 @@
               <div class="cat-offer">Rework – $100</div>
               <div class="cat-offer">Branded – $175</div>
             </div>
-            <button class="cat-explore" type="button" data-target="community" aria-expanded="false">Explore →</button>
+            <button class="cat-explore" type="button" data-target="community" aria-expanded="false" aria-controls="service-panel">Explore →</button>
           </div>
         </div>
         <div class="col-md-6 col-lg-3">
@@ -285,6 +286,7 @@
         var panel = document.getElementById('service-panel');
         var panelTitle = document.getElementById('service-panel-title');
         var titles = { stream: 'Stream Setup', automation: 'Automation', community: 'Community Setup' };
+        var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         function show(cat) {
           sections.forEach(function (s) { s.hidden = (s.dataset.category !== cat); });
           document.querySelectorAll('.cat-card').forEach(function (c) {
@@ -295,7 +297,18 @@
           });
           panelTitle.textContent = titles[cat] || 'Service Details';
           panel.hidden = false;
-          panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          // scroll only if panel not fully visible
+          var rect = panel.getBoundingClientRect();
+          var navHeight = 0;
+          var nav = document.querySelector('.navbar');
+          if (nav) navHeight = nav.getBoundingClientRect().height;
+          var top = rect.top - navHeight;
+          var bottom = rect.bottom;
+          var vh = window.innerHeight;
+          if (top < 0 || bottom > vh) {
+            var target = panel.getBoundingClientRect().top + window.scrollY - navHeight - 16;
+            window.scrollTo({ top: target, behavior: prefersReduced ? 'auto' : 'smooth' });
+          }
         }
         buttons.forEach(function (btn) {
           btn.addEventListener('click', function (e) {
