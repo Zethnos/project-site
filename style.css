@@ -185,6 +185,20 @@ nav {
 .btn-custom:hover {
   background-color: #e03a00;
 }
+.btn-cta {
+  display: inline-block;
+  background: #fe5b16;
+  color: #fff;
+  font-family: "Bungee", cursive;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  text-decoration: none;
+  border: none;
+}
+.btn-cta:hover {
+  background: #e03a00;
+  color: #fff;
+}
 .card-title,
 .btn-custom {
   font-family: "Bungee", cursive;
