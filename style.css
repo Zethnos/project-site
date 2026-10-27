@@ -572,3 +572,10 @@ h1:not(.zethnos-title) {
 .svc-summary-price { color: #00ff00; font-family: "Bungee", cursive; }
 .svc-details-body { padding: 0 1.25rem 1.25rem; color: #cfcfcf; }
 .svc-details-body ul { padding-left: 1.1rem; line-height: 1.6; }
+
+/* === service panel (category selection) === */
+.svc-panel { background: #111; border: 1px solid #2a2a2a; border-radius: 10px; padding: 1.5rem; margin-top: 1.5rem; }
+.svc-panel-title { color: #fff; font-family: "Bungee", cursive; margin-bottom: 1rem; }
+.svc-panel-section { display: grid; gap: 1rem; }
+.cat-card.selected { border-color: #00ff00; box-shadow: 0 0 0 2px rgba(0,255,0,0.25); }
+.cat-explore { cursor: pointer; background: none; border: none; padding: 0; font: inherit; }
