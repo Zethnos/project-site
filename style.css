@@ -524,7 +524,7 @@ h1:not(.zethnos-title) {
       .svc-hero .lead { color: #d3d3d3; font-size: 1.15rem; max-width: 720px; margin: 0 auto 1.75rem; text-wrap: balance; }
       .svc-cta { display: inline-block; background: #fe5b16; color: #fff; font-family: "Bungee", cursive; padding: 0.85rem 1.6rem; border-radius: 8px; text-decoration: none; margin: 0.25rem; }
       .svc-cta:hover { background: #e03a00; color: #fff; }
-      .svc-cta.secondary { background: #222; border: 2px solid #00ff00; color: #00ff00; }
+      .svc-cta.secondary { background: #0a0a0a; border: 2px solid #00ff00; color: #00ff00; }
       .svc-cta.secondary:hover { background: #00ff00; color: #111; }
       .svc-section { max-width: 1200px; margin: 0 auto; padding: 2.5rem 1rem; }
       .svc-section h2 { font-size: 1.6rem; margin-bottom: 1.25rem; }
