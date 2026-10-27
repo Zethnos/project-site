@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="style.css?v=4" />
     <link rel="canonical" href="https://zethnos.com/services.html" />
   </head>
-  <body>
+<body class="services-page">
     <nav class="navbar navbar-expand-lg">
       <div class="container-fluid">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -249,7 +249,7 @@
       <ol class="svc-steps">
         <li><div><strong>Tell me your goal</strong> — Contact Zethnos with the task or outcome you need.</div></li>
         <li><div><strong>Agree on scope and price</strong> — Confirm the deliverables, limitations, and cost before work starts.</div></li>
-        <li><div><strong>Complete payment and provide materials</strong> — Use the existing supported payment workflow and provide the required non-sensitive materials.</div></li>
+        <li><div><strong>Complete payment and provide materials</strong> — Once the scope and price are approved, you'll receive payment instructions. After payment clears and the required non-sensitive materials arrive, work can begin.</div></li>
         <li><div><strong>Receive your setup and handoff</strong> — Get the agreed work, testing, and documentation.</div></li>
       </ol>
     </section>
@@ -287,26 +287,41 @@
         var panelTitle = document.getElementById('service-panel-title');
         var titles = { stream: 'Stream Setup', automation: 'Automation', community: 'Community Setup' };
         var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var current = null;
+        function closePanel() {
+          panel.hidden = true;
+          sections.forEach(function (s) { s.hidden = true; });
+          document.querySelectorAll('.cat-card').forEach(function (c) {
+            c.classList.remove('selected');
+            var btn = c.querySelector('.cat-explore');
+            if (btn) { btn.setAttribute('aria-expanded', 'false'); btn.textContent = 'Explore →'; }
+          });
+          current = null;
+        }
         function show(cat) {
+          if (current === cat) { closePanel(); return; }
           sections.forEach(function (s) { s.hidden = (s.dataset.category !== cat); });
           document.querySelectorAll('.cat-card').forEach(function (c) {
             var isSel = c.dataset.category === cat;
             c.classList.toggle('selected', isSel);
             var btn = c.querySelector('.cat-explore');
-            if (btn) btn.setAttribute('aria-expanded', isSel ? 'true' : 'false');
+            if (btn) {
+              btn.setAttribute('aria-expanded', isSel ? 'true' : 'false');
+              btn.textContent = isSel ? 'Viewing →' : 'Explore →';
+            }
           });
           panelTitle.textContent = titles[cat] || 'Service Details';
           panel.hidden = false;
-          // scroll only if panel not fully visible
-          var rect = panel.getBoundingClientRect();
-          var navHeight = 0;
+          current = cat;
+          var heading = panelTitle;
+          var rect = heading.getBoundingClientRect();
           var nav = document.querySelector('.navbar');
-          if (nav) navHeight = nav.getBoundingClientRect().height;
+          var navHeight = nav ? nav.getBoundingClientRect().height : 0;
           var top = rect.top - navHeight;
           var bottom = rect.bottom;
           var vh = window.innerHeight;
           if (top < 0 || bottom > vh) {
-            var target = panel.getBoundingClientRect().top + window.scrollY - navHeight - 16;
+            var target = heading.getBoundingClientRect().top + window.scrollY - navHeight - 16;
             window.scrollTo({ top: target, behavior: prefersReduced ? 'auto' : 'smooth' });
           }
         }
