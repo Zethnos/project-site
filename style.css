@@ -188,7 +188,7 @@ nav {
 .btn-cta {
   display: inline-block;
   background: #fe5b16;
-  color: #fff;
+  color: #fff !important;
   font-family: "Bungee", cursive;
   padding: 0.6rem 1.2rem;
   border-radius: 8px;
